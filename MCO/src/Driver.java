@@ -1,3 +1,5 @@
+package MCO.src;
+
 import java.util.*;
 /**
  * This class is the main method of the machine project

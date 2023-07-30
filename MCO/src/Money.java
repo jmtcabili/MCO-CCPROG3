@@ -1,4 +1,4 @@
-
+package MCO.src;
 /**
  * This class contains getters and setters of money
  * @author Johan Marlo T. Cabili

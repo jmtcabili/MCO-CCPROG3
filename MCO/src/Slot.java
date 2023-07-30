@@ -1,3 +1,4 @@
+package MCO.src;
 /**
  * This class contains the getters and setters of slot
  * @author Johan Marlo T. Cabili
