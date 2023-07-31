@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Panel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,10 +44,10 @@ public class DriverView {
 
     private JLabel machineName;
 
-    private JButton addStockBtn, setPriceBtn, itemTypeBtn, coin1, coin5, coin10, coin20,
+    private JButton addStockBtn, setPriceBtn, coin1, coin5, coin10, coin20,
                     bill20, bill50, bill100;
 
-    private JTextField itemNameTf, numItemTf, numRestockTf, 
+    private JTextField itemNameTf, numItemTf, stockPriceTf, 
                        slotNumberTf, newPriceTf; 
 
     private JTextArea inventory, totalDenomination, collectedMoney;
@@ -92,12 +93,9 @@ public class DriverView {
         this.itemCountTf = new JTextField(); 
 
 
-        this.createVM_Btn = new JButton("Create Regular VM");
-        this.createVM_Btn.setPreferredSize(new Dimension(223, 54));
+        this.createVM_Btn = new JButton("Create Vending Machine");
         this.testVM_Btn = new JButton("Test a vending machine");
-        this.testVM_Btn.setPreferredSize(new Dimension(223, 54));
         this.exit_Btn1 = new JButton("Exit");
-        this.exit_Btn1.setPreferredSize(new Dimension(223, 54));
         this.VMType_Btn = new JButton("Regular");
 
 
@@ -248,15 +246,24 @@ public class DriverView {
 
     public void regularMaintenceFrame(){
         this.regularMaintenanceFrame = new JFrame("Vending Machine Factory - Maintenance"); 
+        this.regularMaintenanceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.regularMaintenanceFrame.setSize(600, 800);
 
         JPanel mPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
         this.machineName = new JLabel("");
         this.machineName.setFont(new Font("Calibri", Font.PLAIN, 30));
+        mPanel.add(machineName);
 
         this.addStockBtn = new JButton("Add Stock");
         this.setPriceBtn = new JButton("Set Price");
+
+        /*
+        //TO-DO : Remove itemtype btn
         this.itemTypeBtn = new JButton("Rice");
+         itemTypeBtn.setBounds(33, 250, 104, 29);
+         this.regularMaintenanceFrame.add(itemTypeBtn);
+        */
+
         this.coin1 = new JButton("1");
         this.coin5 = new JButton("5");
         this.coin10 = new JButton("10");
@@ -265,15 +272,16 @@ public class DriverView {
         this.bill50 = new JButton("50");
         this.bill100 = new JButton("100");
 
-        this.itemNameTf = new JTextField();
+        //TO-DO: Remove default text in text field
+        this.itemNameTf = new JTextField("Item name");
         this.itemNameTf.setColumns(20);
-        this.numItemTf = new JTextField();
+        this.numItemTf = new JTextField("# of items: ");
         this.numItemTf.setColumns(20);
-        this.numRestockTf = new JTextField();
-        this.numRestockTf.setColumns(20);
-        this.slotNumberTf = new JTextField();
+        this.stockPriceTf = new JTextField("Item price");
+        this.stockPriceTf.setColumns(20);
+        this.slotNumberTf = new JTextField("Slot #");
         this.slotNumberTf.setColumns(20);
-        this.newPriceTf = new JTextField();
+        this.newPriceTf = new JTextField("New price");
         this.newPriceTf.setColumns(20);
         
         this.inventory = new JTextArea("Inventory: ");
@@ -290,8 +298,8 @@ public class DriverView {
 
         itemNameTf.setBounds(33, 175, 104, 29);
         numItemTf.setBounds(33, 211, 104, 29);
-        itemTypeBtn.setBounds(33, 250, 104, 29);
-
+        stockPriceTf.setBounds(33,247, 104, 29);
+       
         slotNumberTf.setBounds(165, 175, 104, 29);
         newPriceTf.setBounds(165, 211, 104, 29);
 
@@ -304,8 +312,9 @@ public class DriverView {
         bill100.setBounds(396, 225, 116, 45);
 
         inventory.setBounds(33, 340, 252, 390);
+        collectedMoney.setBounds(336, 1, 235, 160);
         totalDenomination.setBounds(336, 340, 235, 160);
-        collectedMoney.setBounds(336, 400, 235, 160);
+        
 
         this.regularMaintenanceFrame.add(mPanel);
         this.regularMaintenanceFrame.add(addStockBtn);
@@ -314,7 +323,6 @@ public class DriverView {
         this.regularMaintenanceFrame.add(numItemTf);
         this.regularMaintenanceFrame.add(slotNumberTf);
         this.regularMaintenanceFrame.add(newPriceTf);
-        this.regularMaintenanceFrame.add(itemTypeBtn);
         this.regularMaintenanceFrame.add(coin1);
         this.regularMaintenanceFrame.add(coin5);
         this.regularMaintenanceFrame.add(coin10);
@@ -322,7 +330,6 @@ public class DriverView {
         this.regularMaintenanceFrame.add(bill20);
         this.regularMaintenanceFrame.add(bill50);
         this.regularMaintenanceFrame.add(bill100);
-        this.regularMaintenanceFrame.add(inventory);
         this.regularMaintenanceFrame.add(inventory);
         this.regularMaintenanceFrame.add(totalDenomination);
         this.regularMaintenanceFrame.add(collectedMoney);
