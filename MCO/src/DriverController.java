@@ -7,6 +7,8 @@ public class DriverController {
     private DriverView driverView; 
     private DriverModel driverModel; 
 
+
+
     public DriverController(DriverView driverView, DriverModel driverModel){
         this.driverView = driverView; 
         this.driverModel = driverModel; 
@@ -44,15 +46,26 @@ public class DriverController {
         });
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                
+                driverView.openOptionsFrame();
+                driverView.closeMainFrame();
+
             }
         });
         this.driverView.setExit_BtnListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                driverView.closeFrame(); 
+                driverView.closeMainFrame(); 
             }
         });
+
+        this.driverView.setExit_Btn2Listener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.closeOptionsFrame(); 
+            }
+        });
+
+
     }
 }
 

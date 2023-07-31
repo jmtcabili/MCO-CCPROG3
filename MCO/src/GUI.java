@@ -5,5 +5,6 @@ public class GUI {
         DriverModel driverModel = new DriverModel();
 
         DriverController driverController = new DriverController(driverView, driverModel);
+
     }
 }

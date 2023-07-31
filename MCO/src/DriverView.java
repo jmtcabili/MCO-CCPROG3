@@ -2,6 +2,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -15,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.Flow;
 
 public class DriverView {
+
+    //Main frame components
     private JFrame mainFrame; 
 
     private JLabel nameLbl, slotCountLbl, itemCountLbl, factoryLabel, feedbackLbl; 
@@ -23,12 +26,22 @@ public class DriverView {
 
     private JButton createVM_Btn, VMType_Btn;  
     private JButton testVM_Btn; 
-    private JButton exit_Btn; 
+    private JButton exit_Btn1; 
 
     private JTextArea vendingMachineList; 
 
+    //Test VM Menu Components
+    private JFrame optionsFrame; 
+
+    private JLabel vmLbl; 
+    private JButton testFeaturesBtn, maintenanceBtn, exit_Btn2; 
 
     public DriverView(){
+        MainView(); 
+        OptionsVMView();
+    }
+
+    public void MainView(){
         this.mainFrame = new JFrame("Vending Machine Factory");
 
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,8 +74,8 @@ public class DriverView {
         this.createVM_Btn.setPreferredSize(new Dimension(223, 54));
         this.testVM_Btn = new JButton("Test a vending machine");
         this.testVM_Btn.setPreferredSize(new Dimension(223, 54));
-        this.exit_Btn = new JButton("Exit");
-        this.exit_Btn.setPreferredSize(new Dimension(223, 54));
+        this.exit_Btn1 = new JButton("Exit");
+        this.exit_Btn1.setPreferredSize(new Dimension(223, 54));
         this.VMType_Btn = new JButton("Regular");
 
 
@@ -76,7 +89,7 @@ public class DriverView {
         this.itemCountTf.setBounds(321, 346, 145, 30);
         this.feedbackLbl.setBounds(232, 370, 145, 30);
         this.testVM_Btn.setBounds(62,406,223,54);
-        this.exit_Btn.setBounds(312, 406, 223, 54);
+        this.exit_Btn1.setBounds(312, 406, 223, 54);
         this.VMType_Btn.setBounds(350, 226, 101, 24);
         this.vendingMachineList.setBounds(50, 507, 485, 198);
 
@@ -91,7 +104,7 @@ public class DriverView {
         mainFrame.add(itemCountTf);
         mainFrame.add(feedbackLbl);
         mainFrame.add(testVM_Btn);
-        mainFrame.add(exit_Btn);
+        mainFrame.add(exit_Btn1);
         mainFrame.add(VMType_Btn);
         mainFrame.add(vendingMachineList);
 
@@ -127,7 +140,7 @@ public class DriverView {
         this.testVM_Btn.addActionListener(actionListener);
     }
     public void setExit_BtnListener(ActionListener actionListener){
-        this.exit_Btn.addActionListener(actionListener);
+        this.exit_Btn1.addActionListener(actionListener);
     }
     public void setVendingMachineList (String text){ //maybe accept the list then append machines to string
         this.vendingMachineList.setText(text);
@@ -155,8 +168,48 @@ public class DriverView {
         this.slotCountTf.setText("");
         this.itemCountTf.setText("");
     }
-    public void closeFrame(){
+    public void closeMainFrame(){
         mainFrame.dispose();
     }
+
+    public void OptionsVMView(){
+        this.optionsFrame = new JFrame("Vending Machine Factory");
+
+        this.optionsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.optionsFrame.setSize(600, 800); 
+
+        this.vmLbl = new JLabel("");
+        this.testFeaturesBtn = new JButton("Test Vending Features");
+        this.maintenanceBtn = new JButton("Perform Maintenance");
+        this.exit_Btn2 = new JButton("Exit");
+
+        this.vmLbl.setBounds(184, 127, 223, 54);
+        this.testFeaturesBtn.setBounds(184, 251, 223, 54);
+        this.maintenanceBtn.setBounds(184, 338, 223, 54);
+        this.exit_Btn2.setBounds(184, 426, 223, 54);
+
+        this.optionsFrame.add(vmLbl);
+        this.optionsFrame.add(testFeaturesBtn);
+        this.optionsFrame.add(maintenanceBtn);
+        this.optionsFrame.add(exit_Btn2); 
+
+        this.optionsFrame.setResizable(false);
+        this.optionsFrame.setLayout(null);
+        this.optionsFrame.setVisible(false);
+    }
+
+    public void setVMLblText(String text){
+        this.vmLbl.setText(text); 
+    }
+    public void openOptionsFrame(){
+        this.optionsFrame.setVisible(true); 
+    }
+    public void setExit_Btn2Listener(ActionListener actionListener){
+        this.exit_Btn2.addActionListener(actionListener);
+    }
+    public void closeOptionsFrame(){
+        optionsFrame.dispose();
+    }
+
 
 }
