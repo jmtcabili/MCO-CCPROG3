@@ -1,6 +1,7 @@
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JTextArea;
 
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +50,7 @@ public class DriverView {
 		this.mainFrame.setSize(600, 800);
         
         this.factoryLabel = new JLabel("Venching Machine Factory");
+        this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
         this.nameLbl = new JLabel("Enter vending machine name: ");
         this.slotCountLbl = new JLabel("Enter number of slots (8-12): ");
         this.itemCountLbl = new JLabel("Enter max item count per slot: ");
@@ -79,7 +82,7 @@ public class DriverView {
         this.VMType_Btn = new JButton("Regular");
 
 
-        this.factoryLabel.setBounds(204, 150, 193, 50);
+        this.factoryLabel.setBounds(125, 125, 500, 50);
         this.createVM_Btn.setBounds(100, 211, 200, 54);
         this.nameLbl.setBounds(100, 286, 300, 30);
         this.nameTf.setBounds(321, 286, 145, 30);
@@ -178,17 +181,21 @@ public class DriverView {
         this.optionsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.optionsFrame.setSize(600, 800); 
 
+        JPanel opanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
         this.vmLbl = new JLabel("");
+        this.vmLbl.setFont(new Font("Calibri", Font.PLAIN, 30));
+        opanel.add(vmLbl); 
+        opanel.setBounds(184, 180, 223, 54);
+
         this.testFeaturesBtn = new JButton("Test Vending Features");
         this.maintenanceBtn = new JButton("Perform Maintenance");
         this.exit_Btn2 = new JButton("Exit");
-
-        this.vmLbl.setBounds(184, 127, 223, 54);
+        
         this.testFeaturesBtn.setBounds(184, 251, 223, 54);
         this.maintenanceBtn.setBounds(184, 338, 223, 54);
         this.exit_Btn2.setBounds(184, 426, 223, 54);
 
-        this.optionsFrame.add(vmLbl);
+        this.optionsFrame.add(opanel);
         this.optionsFrame.add(testFeaturesBtn);
         this.optionsFrame.add(maintenanceBtn);
         this.optionsFrame.add(exit_Btn2); 

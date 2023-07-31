@@ -33,6 +33,9 @@ public class DriverModel {
         }
         return message; 
     }
+    public VMReg getLatestMachine(){
+        return machineList.get(machineList.size()-1); 
+    }
     
 
 }

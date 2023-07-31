@@ -47,8 +47,8 @@ public class DriverController {
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 driverView.openOptionsFrame();
+                driverView.setVMLblText(driverModel.getLatestMachine().getName());
                 driverView.closeMainFrame();
-
             }
         });
         this.driverView.setExit_BtnListener(new ActionListener(){
@@ -65,6 +65,7 @@ public class DriverController {
             }
         });
 
+        
 
     }
 }
