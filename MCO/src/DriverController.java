@@ -47,7 +47,7 @@ public class DriverController {
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 driverView.openOptionsFrame();
-                driverView.setVMLblText(driverModel.getLatestMachine().getName());
+                driverView.setVMLblText(driverModel.getLatestMachine().getName() + "'s Machine");
                 driverView.closeMainFrame();
             }
         });
@@ -58,10 +58,19 @@ public class DriverController {
             }
         });
 
-        this.driverView.setExit_Btn2Listener(new ActionListener(){
+        this.driverView.setBackBtnListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                driverView.closeOptionsFrame(); 
+                driverView.openMainFrame();
+                driverView.closeOptionsFrame();    
+            }
+        });
+
+        this.driverView.setMaintenanceBtnListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.openMaintenanceFrame();
+                driverView.closeOptionsFrame();
             }
         });
 
