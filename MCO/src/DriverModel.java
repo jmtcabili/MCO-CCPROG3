@@ -24,6 +24,21 @@ public class DriverModel {
         }
         return isFound; 
     }
+
+    public int emptySlot(VMReg VM){
+        boolean hasEmptySlot = false; 
+        int emptySlot = -1;
+        int i = 0; 
+        while (i < VM.getSlots().length && hasEmptySlot == false){
+            if (VM.getSlots()[i] == null){
+                hasEmptySlot = true; 
+                emptySlot = i; 
+            }
+            i+=1;
+        }
+        return emptySlot; 
+    }
+
     public String printMachines(){
         String message = ""; 
 
@@ -33,6 +48,7 @@ public class DriverModel {
         }
         return message; 
     }
+    
     public VMReg getLatestMachine(){
         return machineList.get(machineList.size()-1); 
     }
