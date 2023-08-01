@@ -1,1 +1,2 @@
-driverController = new DriverController(driverView, driverModel);
+
+    public static void main(String[] args){
