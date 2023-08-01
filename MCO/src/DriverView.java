@@ -45,7 +45,7 @@ public class DriverView {
                    slotsLeft, feedback; 
     private JButton addItemBtn, finishBtn; 
     private JTextField itemTf, priceTf, caloriesTf, quantityTf; 
-    private JTextArea inventory; 
+    private JTextArea inventoryI; 
 
     //Maintencen Frame components
     private JFrame regularMaintenanceFrame; 
@@ -55,7 +55,7 @@ public class DriverView {
                     bill20, bill50, bill100;
     private JTextField itemNameTf, numItemTf, stockPriceTf, 
                        slotNumberTf, newPriceTf; 
-    private JTextArea totalDenomination, collectedMoney;
+    private JTextArea totalDenomination, collectedMoney, inventoryM;
     public Object setTestFeaturesBtnListener; 
 
   
@@ -64,8 +64,8 @@ public class DriverView {
     public DriverView(){
         MainView(); 
         OptionsVMView();
-        itemsInitializationView();
         regularMaintenceFrame();
+        itemsInitializationView();
     }
 
     //Main View
@@ -273,12 +273,12 @@ public class DriverView {
         this.addItemBtn = new JButton("Add Item");
         this.feedback = new JLabel("");
 
-        this.inventory = new JTextArea("Inventory: "); 
-        this.inventory.setEditable(false);
-        inventory.setBounds(75, 400, 449, 310);
+        this.inventoryI = new JTextArea("Inventory: "); 
+        this.inventoryI.setEditable(false);
+        inventoryI.setBounds(75, 400, 449, 310);
         JPanel inventoryPanel = new JPanel(); 
         inventoryPanel.setLayout(null);
-        inventoryPanel.add(inventory);
+        inventoryPanel.add(inventoryI);
 
         initializeItems.setBounds(246, 41, 108, 19);
         finishBtn.setBounds(410, 20, 159, 33);
@@ -345,7 +345,10 @@ public class DriverView {
         return this.quantityTf.getText();
     }
     public void setInventoryText(String text){
-        this.inventory.setText("Inventory: \n" + text);
+        this.inventoryI.setText(text);
+    }
+    public void setSlotsLeft(String text){
+        this.slotsLeft.setText(text);
     }
     
     public void clearItemInitializeFields(){
@@ -398,11 +401,11 @@ public class DriverView {
         this.newPriceTf = new JTextField("New price");
         this.newPriceTf.setColumns(20);
         
-        this.inventory = new JTextArea("Inventory: ");
+        this.inventoryM = new JTextArea("Inventory: ");
         this.totalDenomination = new JTextArea("Total Denominations: "); 
         this.collectedMoney = new JTextArea("Collected: ");
 
-        this.inventory.setEditable(false);
+        this.inventoryM.setEditable(false);
         this.totalDenomination.setEditable(false);
         this.collectedMoney.setEditable(false);
 
@@ -427,7 +430,7 @@ public class DriverView {
 
         collectMoney.setBounds(373, 547, 154, 54);
         totalDenomination.setBounds(336, 310, 235, 221);
-        inventory.setBounds(33, 280, 200, 390);
+        inventoryM.setBounds(33, 280, 200, 390);
         collectedMoney.setBounds(336, 610, 235, 90);
         
         JPanel panel6 = new JPanel();
@@ -452,7 +455,7 @@ public class DriverView {
         this.regularMaintenanceFrame.add(bill20);
         this.regularMaintenanceFrame.add(bill50);
         this.regularMaintenanceFrame.add(bill100);
-        this.regularMaintenanceFrame.add(inventory);
+        this.regularMaintenanceFrame.add(inventoryM);
         this.regularMaintenanceFrame.add(panel6);
         
 

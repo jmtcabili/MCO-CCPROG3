@@ -50,6 +50,8 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 if (driverModel.getLatestMachine().getIsInitialized() == false){
                     driverView.openInitializeItems();
+                    int empty = driverModel.countEmptySlot(driverModel.getLatestMachine());
+                    driverView.setSlotsLeft("Slots: " + empty);
                 }else{
                     driverView.openOptionsFrame();
                 }
@@ -82,14 +84,13 @@ public class DriverController {
                         Item item = new Item(itemName, calories, price); //creates item instance
                         Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
                         slot.stockItem(item, quantity);
-                        System.out.println();
                         driverModel.getLatestMachine().setSlot(emptySlot, slot);
-                        System.out.println("1");
-                        
-                        System.out.println("2");
+                        int empty = driverModel.countEmptySlot(driverModel.getLatestMachine());
+                        driverView.setSlotsLeft("Slots: " + empty);
+                        driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
                         driverModel.getLatestMachine().displayItems();
+
                     }
-                    
                 }
                 driverView.clearItemInitializeFields();
             

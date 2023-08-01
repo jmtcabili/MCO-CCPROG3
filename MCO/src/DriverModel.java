@@ -24,7 +24,14 @@ public class DriverModel {
         }
         return isFound; 
     }
-
+    public int countEmptySlot(VMReg VM){
+        int countEmpty = 0; 
+        for (int i = 0; i < VM.getSlots().length; i++){
+            if (VM.getSlots()[i] == null)
+                countEmpty++;
+        }
+        return countEmpty; 
+    }
     public int emptySlot(VMReg VM){
         boolean hasEmptySlot = false; 
         int emptySlot = -1;

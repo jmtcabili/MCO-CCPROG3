@@ -41,15 +41,17 @@ public class VMReg {
     public String returnInventory(){
         int i = 0; 
         String message = "";
+        System.out.println("hatdg");
         while (i < this.slots.length && slots[i] != null){
-            message.concat(i+1 + ".) " + slots[i].getItem().getName()+"\n");
-            System.out.println(i+1 + ".) " + slots[i].getItem().getName()+"\n");
+            message += (i+1 + ".) " + slots[i].getItem().getName()+"\n");
+            System.out.println(i);
+            i++;
         }
         return message; 
 
     }
 
-
+    
 
     /** Allows the user to test the vending machine
      * @param sc scanner that scans an input from the user
