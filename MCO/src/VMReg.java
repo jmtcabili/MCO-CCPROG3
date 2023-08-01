@@ -40,18 +40,19 @@ public class VMReg {
 
     public String returnInventory(){
         int i = 0; 
-        String message = "";
-        System.out.println("hatdg");
+        String message = "Inventory: \n";
         while (i < this.slots.length && slots[i] != null){
-            message += (i+1 + ".) " + slots[i].getItem().getName()+"\n");
-            System.out.println(i);
+            message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + " pesos - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs\n");
             i++;
         }
         return message; 
-
     }
 
-    
+    public void setInitialized(boolean bool){
+        this.isInitialized = bool; 
+    }
+
+
 
     /** Allows the user to test the vending machine
      * @param sc scanner that scans an input from the user

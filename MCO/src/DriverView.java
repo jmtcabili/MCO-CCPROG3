@@ -43,7 +43,7 @@ public class DriverView {
     private JFrame itemInitializationFrame; 
     private JLabel initializeItems, item, price, calories, quantity,
                    slotsLeft, feedback; 
-    private JButton addItemBtn, finishBtn; 
+    private JButton addItemBtn;
     private JTextField itemTf, priceTf, caloriesTf, quantityTf; 
     private JTextArea inventoryI; 
 
@@ -258,7 +258,6 @@ public class DriverView {
         this.itemInitializationFrame.setSize(600, 800);
 
         this.initializeItems = new JLabel("Initialize Items: ");
-        this.finishBtn = new JButton("FINISH");
         this.slotsLeft = new JLabel("Slots Left: ");
         this.item = new JLabel("Item name: ");
         this.price = new JLabel("Price: ");
@@ -281,7 +280,6 @@ public class DriverView {
         inventoryPanel.add(inventoryI);
 
         initializeItems.setBounds(246, 41, 108, 19);
-        finishBtn.setBounds(410, 20, 159, 33);
         slotsLeft.setBounds(199, 97, 101, 11);
         item.setBounds(199, 145, 87, 19);
         itemTf.setBounds(308, 141, 160, 27);
@@ -299,7 +297,6 @@ public class DriverView {
         inventoryPanel.setBounds(75, 400, 449, 310);
         
         itemInitializationFrame.add(initializeItems);
-        itemInitializationFrame.add(finishBtn);
         itemInitializationFrame.add(slotsLeft);
         itemInitializationFrame.add(item);
         itemInitializationFrame.add(itemTf);

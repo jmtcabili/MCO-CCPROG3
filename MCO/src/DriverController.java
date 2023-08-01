@@ -80,6 +80,7 @@ public class DriverController {
                     int calories = Integer.parseInt(driverView.getCaloriesTf());
                     int quantity = Integer.parseInt(driverView.getQuantity());
                     if (driverModel.emptySlot(driverModel.getLatestMachine()) != -1){
+                        //TO-DO: consider duplicate item
                         int emptySlot = driverModel.emptySlot(driverModel.getLatestMachine());
                         Item item = new Item(itemName, calories, price); //creates item instance
                         Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
@@ -89,7 +90,11 @@ public class DriverController {
                         driverView.setSlotsLeft("Slots: " + empty);
                         driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
                         driverModel.getLatestMachine().displayItems();
-
+                        if (empty == 0){
+                            driverModel.getLatestMachine().setInitialized(true);
+                            driverView.openOptionsFrame();
+                            driverView.closeInitializeItems();
+                        }
                     }
                 }
                 driverView.clearItemInitializeFields();
