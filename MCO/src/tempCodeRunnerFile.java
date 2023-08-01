@@ -1,0 +1,1 @@
+driverController = new DriverController(driverView, driverModel);

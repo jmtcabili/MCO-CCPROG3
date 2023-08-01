@@ -44,7 +44,8 @@ public class DriverView {
 
     private JLabel machineName;
 
-    private JButton addStockBtn, setPriceBtn, coin1, coin5, coin10, coin20,
+    private JButton addStockBtn, setPriceBtn, collectMoney,
+                    coin1, coin5, coin10, coin20,
                     bill20, bill50, bill100;
 
     private JTextField itemNameTf, numItemTf, stockPriceTf, 
@@ -248,14 +249,15 @@ public class DriverView {
         this.regularMaintenanceFrame = new JFrame("Vending Machine Factory - Maintenance"); 
         this.regularMaintenanceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.regularMaintenanceFrame.setSize(600, 800);
-
-        JPanel mPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
+        
+        JPanel mPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); 
         this.machineName = new JLabel("");
         this.machineName.setFont(new Font("Calibri", Font.PLAIN, 30));
         mPanel.add(machineName);
-
+        mPanel.setLayout(null);
         this.addStockBtn = new JButton("Add Stock");
         this.setPriceBtn = new JButton("Set Price");
+        this.collectMoney = new JButton("Collect Money");
 
         /*
         //TO-DO : Remove itemtype btn
@@ -311,11 +313,19 @@ public class DriverView {
         bill50.setBounds(465, 175, 116, 45);
         bill100.setBounds(396, 225, 116, 45);
 
-        inventory.setBounds(33, 340, 252, 390);
-        collectedMoney.setBounds(336, 1, 235, 160);
-        totalDenomination.setBounds(336, 340, 235, 160);
+        collectMoney.setBounds(373, 577, 154, 54);
+        totalDenomination.setBounds(336, 340, 235, 221);
+        inventory.setBounds(33, 340, 200, 390);
+        collectedMoney.setBounds(336, 640, 235, 90);
         
+        JPanel panel6 = new JPanel();
+        panel6.add(totalDenomination);
+        panel6.add(collectMoney);
+        panel6.add(collectedMoney);
+        panel6.setBounds(301,340 ,283, 390);
+        panel6.setLayout(null);
 
+        
         this.regularMaintenanceFrame.add(mPanel);
         this.regularMaintenanceFrame.add(addStockBtn);
         this.regularMaintenanceFrame.add(setPriceBtn);
@@ -331,8 +341,8 @@ public class DriverView {
         this.regularMaintenanceFrame.add(bill50);
         this.regularMaintenanceFrame.add(bill100);
         this.regularMaintenanceFrame.add(inventory);
-        this.regularMaintenanceFrame.add(totalDenomination);
-        this.regularMaintenanceFrame.add(collectedMoney);
+        this.regularMaintenanceFrame.add(panel6);
+        
 
         regularMaintenanceFrame.setVisible(false);
     }
@@ -340,5 +350,6 @@ public class DriverView {
     public void openMaintenanceFrame(){
         this.regularMaintenanceFrame.setVisible(true);
     }
+    
     
 }

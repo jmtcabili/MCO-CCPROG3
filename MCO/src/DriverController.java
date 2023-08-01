@@ -13,6 +13,7 @@ public class DriverController {
         this.driverView = driverView; 
         this.driverModel = driverModel; 
 
+        //controls for main
         this.driverView.setTypeVM_BtnListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -40,10 +41,11 @@ public class DriverController {
                     driverView.setFeedbackText("Successful add");
                 } else 
                     driverView.setFeedbackText("Unsuccessful add");
-                //TO-DO: Add proper feedback text for conditions above
+                //TO-DO: Add proper feedback text for conditions above if empty also
                 driverView.clearTextFields();
             }
         });
+
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 driverView.openOptionsFrame();
@@ -58,6 +60,7 @@ public class DriverController {
             }
         });
 
+        //controls for optinons
         this.driverView.setBackBtnListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -73,6 +76,7 @@ public class DriverController {
                 driverView.closeOptionsFrame();
             }
         });
+
 
         
 
