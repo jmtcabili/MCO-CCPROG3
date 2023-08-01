@@ -288,11 +288,11 @@ public class VMSpecial extends VMReg {
         int num = 0;
         int choice, choice1, choice2;
         int amountAdded;
-        boolean isFound, foundMeat, foundRice, foundAddon;
+        boolean isFound, foundMeat, foundRice;
         while (num == 0) {
             isFound = false;
             i = j = k = 0;
-            foundMeat = foundRice = foundAddon = false;
+            foundMeat = foundRice =  false;
             System.out.println("-------------------------------");
             System.out.println("Inventory:");
             while (i < slots.length && slots[i] != null){
@@ -322,7 +322,7 @@ public class VMSpecial extends VMReg {
                 }
             }while (choice < 1 || choice > 4);
             
-            if (choice == 1) {
+            if (choice == 1) { //ADD INGREDIENTS TO THE BAG
                 do{
                     System.out.println("Choose an ingredient:");
                     displayItems();
@@ -351,8 +351,8 @@ public class VMSpecial extends VMReg {
                 }
                 else {
                     Item items = new Item(super.slots[choice1-1].getItem().getName(),
-                                        super.slots[choice1-1].getItem().getCalories(),
-                                        super.slots[choice1-1].getItem().getPrice());
+                                          super.slots[choice1-1].getItem().getCalories(),
+                                          super.slots[choice1-1].getItem().getPrice());
 
                     Slot cart = new Slot(items);
                     orderBag.add(cart);
@@ -361,7 +361,7 @@ public class VMSpecial extends VMReg {
                 }
 
             }
-            else if (choice == 2) {
+            else if (choice == 2) { // ORDERS THE DISH
                 System.out.println("Order Bag:");
                 displayOrderBag();
                 do{
@@ -393,7 +393,6 @@ public class VMSpecial extends VMReg {
                         }
 
                         if (orderBag.get(k).getItem() instanceof Addon) {
-                            foundAddon = true;
                             System.out.println("Topping " +orderBag.get(k).getItem().getName() + "...");
                             try{
                                 Thread.sleep(2000);
@@ -403,7 +402,6 @@ public class VMSpecial extends VMReg {
                         }
 
                         if (orderBag.get(k).getItem() instanceof Sauce) {
-                            foundAddon = true;
                             System.out.println("Marinating with " +orderBag.get(k).getItem().getName() + "...");
                             try{
                                 Thread.sleep(2000);
@@ -412,13 +410,28 @@ public class VMSpecial extends VMReg {
                             }
                         }
                     }
+                    if (foundMeat == true && 
+                        foundRice == true) {
+                        System.out.println("Mongolian Fried Rice done!");
+                        try{
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                    }
                 }
             
             }
 
-            else if (choice == 3) {
-                if (orderBag.size()==0) {
-                    System.out.println("There are no items in the order bag.");
+            else if (choice == 3) { // CLEARS ORDER BAG
+                for (int l = 0; l<slots.length; l++) {
+                    for (int m = 0; m<orderBag.size(); m++) {
+                        if (slots[l].getItem().getName() ==
+                            orderBag.get(m).getItem().getName()) {
+                                slots[l].setNumItem(orderBag.get(m).getNumItem());
+                                orderBag.remove(m);
+                            }
+                    }
                 }
             }
         }
