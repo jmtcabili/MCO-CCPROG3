@@ -8,14 +8,14 @@ import java.util.*; //THIS IS THE MOST UPDATED VMREG
  */
 
 public class VMReg {
-    private String name; 
+    protected String name; 
     protected Slot[] slots;
     private int slotItemLimit; 
-    private Money moneyCompartment;
-    private int numTransactions;
-    private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-    private boolean justStocked; 
-    private boolean hasTransacted; 
+    protected Money moneyCompartment;
+    protected int numTransactions;
+    protected ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    protected boolean justStocked; 
+    protected boolean hasTransacted; 
 
     /** Blueprint of the VMReg class
      * @param name is the name of the vending machine
