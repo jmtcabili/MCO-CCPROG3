@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class DriverController {
     private DriverView driverView; 
-    private DriverModel driverModel; 
+    private DriverModel driverModel;  
 
 
 
@@ -48,7 +48,13 @@ public class DriverController {
 
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                driverView.openOptionsFrame();
+                if (driverModel.getLatestMachine().getIsInitialized() == false){
+                    driverView.openInitializeItems();
+                    int empty = driverModel.countEmptySlot(driverModel.getLatestMachine());
+                    driverView.setSlotsLeft("Slots: " + empty);
+                }else{
+                    driverView.openOptionsFrame();
+                }
                 driverView.setVMLblText(driverModel.getLatestMachine().getName() + "'s Machine");
                 driverView.closeMainFrame();
             }
@@ -59,6 +65,39 @@ public class DriverController {
                 driverView.closeMainFrame(); 
             }
         });
+        //controls for initializeItem
+        this.driverView.setAddItmBtlnListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //don't forget to clear text field
+                //get latest machine
+                //count empty slots
+                //create slot instance and item instance, add to machine
+                
+                if (!driverView.hasEmptyField()){
+                    String itemName = driverView.getItemNameTf();
+                    int price = Integer.parseInt(driverView.getPriceTf());
+                    int calories = Integer.parseInt(driverView.getCaloriesTf());
+                    int quantity = Integer.parseInt(driverView.getQuantity());
+                    if (driverModel.emptySlot(driverModel.getLatestMachine()) != -1){
+                        int emptySlot = driverModel.emptySlot(driverModel.getLatestMachine());
+                        Item item = new Item(itemName, calories, price); //creates item instance
+                        Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                        slot.stockItem(item, quantity);
+                        driverModel.getLatestMachine().setSlot(emptySlot, slot);
+                        int empty = driverModel.countEmptySlot(driverModel.getLatestMachine());
+                        driverView.setSlotsLeft("Slots: " + empty);
+                        driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
+                        driverModel.getLatestMachine().displayItems();
+
+                    }
+                }
+                driverView.clearItemInitializeFields();
+            
+            }
+        });
+
+
 
         //controls for optinons
         this.driverView.setBackBtnListener(new ActionListener(){
@@ -74,6 +113,15 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 driverView.openMaintenanceFrame();
                 driverView.closeOptionsFrame();
+            }
+        });
+
+        //controls for maintenance
+        this.driverView.setBackBtn2Listener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.openOptionsFrame();
+                driverView.closeMaintenanceFrame();
             }
         });
 

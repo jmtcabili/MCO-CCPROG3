@@ -11,6 +11,7 @@ public class VMReg {
     protected String name; 
     protected Slot[] slots;
     private int slotItemLimit; 
+    private boolean isInitialized = false; 
     protected Money moneyCompartment;
     protected int numTransactions;
     protected ArrayList<Transaction> transactions = new ArrayList<Transaction>();
@@ -31,6 +32,26 @@ public class VMReg {
         this.justStocked = false; 
         this.hasTransacted = false; 
     }
+
+    //new functions
+    public void setSlot(int slotIdx, Slot slot){
+        this.slots[slotIdx] = slot; 
+    }
+
+    public String returnInventory(){
+        int i = 0; 
+        String message = "";
+        System.out.println("hatdg");
+        while (i < this.slots.length && slots[i] != null){
+            message += (i+1 + ".) " + slots[i].getItem().getName()+"\n");
+            System.out.println(i);
+            i++;
+        }
+        return message; 
+
+    }
+
+    
 
     /** Allows the user to test the vending machine
      * @param sc scanner that scans an input from the user
@@ -203,7 +224,7 @@ public class VMReg {
      * @param slotIndex is an index to determine a specific vending machine
      */
     private void dispenseItem(int slotIndex){
-        this.slots[slotIndex].setNumItem(-1);
+        //this.slots[slotIndex].setNumItem(-1);
     }
 
     /** Checks the change to be given to the user
@@ -284,7 +305,7 @@ public class VMReg {
     /** Displays the items in the vending machine
      * 
      */
-    private void displayItems(){
+    public void displayItems(){
         int i = 0;
 
         
@@ -403,20 +424,9 @@ public class VMReg {
                 transactions.get(numTransactions).addEndingslot(slots[k]);
                 k++;
             }
-            //this.tempEnding = Arrays.copyOf(slots, slots.length);
-            /*
-            System.out.println(tempStarting[0].getItem().getName());
-            System.out.println(tempStarting[0].getNumItem());
-            System.out.println(tempStarting[1].getItem().getName());
-            System.out.println(tempStarting[1].getNumItem());
-            System.out.println(tempEnding[0].getItem().getName());
-            System.out.println(tempEnding[0].getNumItem());
-            System.out.println(tempEnding[1].getItem().getName());
-            System.out.println(tempEnding[1].getNumItem());
-            */
+
             System.out.println("added ending");
             
-            //maybe test
             this.numTransactions++;
             this.hasTransacted = false; 
             
@@ -474,7 +484,7 @@ public class VMReg {
                 Slot slot = new Slot(item);
                 //TO DO : Change constructor for slot
                 this.slots[i-1] = slot;
-                this.slots[i-1].setNumItem(amount);
+                //this.slots[i-1].setNumItem(amount);
                 this.justStocked = true; 
             }
             
@@ -511,7 +521,7 @@ public class VMReg {
                     System.out.println("Cannot add stocks since stocks are only limited to 10!");
                 }
                 else {
-                    slots[slotIndex].setNumItem(quantity);
+                    //slots[slotIndex].setNumItem(quantity);
                 }
 
             } while (slots[slotIndex].getNumItem() + quantity > this.slotItemLimit);
@@ -719,6 +729,9 @@ public class VMReg {
      */
     public void setJustStocked(boolean justStocked) {
         this.justStocked = justStocked;
+    }
+    public boolean getIsInitialized(){
+        return this.isInitialized; 
     }
 
 }
