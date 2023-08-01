@@ -13,7 +13,7 @@ public class DriverModel {
         //add a condition to check if vmtype is special or regular
     }
 
-    public boolean isFound(String name){
+    public boolean isFound(String name){//for the machine
         boolean isFound = false; 
         int i = 0; 
 
@@ -24,20 +24,22 @@ public class DriverModel {
         }
         return isFound; 
     }
-    public int countEmptySlot(VMReg VM){
+   
+
+    public int countEmptySlot(){
         int countEmpty = 0; 
-        for (int i = 0; i < VM.getSlots().length; i++){
-            if (VM.getSlots()[i] == null)
+        for (int i = 0; i < getLatestMachine().getSlots().length; i++){
+            if (getLatestMachine().getSlots()[i] == null)
                 countEmpty++;
         }
         return countEmpty; 
     }
-    public int emptySlot(VMReg VM){
+    public int emptySlot(){
         boolean hasEmptySlot = false; 
         int emptySlot = -1;
         int i = 0; 
-        while (i < VM.getSlots().length && hasEmptySlot == false){
-            if (VM.getSlots()[i] == null){
+        while (i < getLatestMachine().getSlots().length && hasEmptySlot == false){
+            if (getLatestMachine().getSlots()[i] == null){
                 hasEmptySlot = true; 
                 emptySlot = i; 
             }
@@ -59,6 +61,58 @@ public class DriverModel {
     public VMReg getLatestMachine(){
         return machineList.get(machineList.size()-1); 
     }
-    
+
+    public Item itemFound(String itemName){
+        boolean itemFound = false; 
+        Item item = null; 
+        int i = 0; 
+
+        while (i < getLatestMachine().getSlots().length && getLatestMachine().getSlots()[i]!= null &&
+                itemFound == false){
+            if (getLatestMachine().getSlots()[i].getItem().getName().equals(itemName)){
+                itemFound = true;
+                item = getLatestMachine().getSlots()[i].getItem(); 
+            }
+            i++;
+        }
+        return item; 
+    }
+    public int findSlotIdx(Item item){
+        int slotIdx = -1; 
+
+        boolean slotFound = false; 
+        int i = 0; 
+
+        while (i < getLatestMachine().getSlots().length && getLatestMachine().getSlots()[i]!= null &&
+                slotFound == false){
+            if (getLatestMachine().getSlots()[i].getItem().getName().equals(item.getName())){
+                slotFound = true; 
+                slotIdx = i; 
+            }
+            i++;
+        }
+        return slotIdx; 
+    }
+    public String returnDenominations(){
+        String message = "Denominations: \n";
+        message += ("1-Peso Coin : " + getLatestMachine().getMoneyCompartment().getCoin1()+"\n");
+        message += ("5-Peso Coin : " + getLatestMachine().getMoneyCompartment().getCoin5()+"\n");
+        message += ("10-Peso Coin : " + getLatestMachine().getMoneyCompartment().getCoin10()+"\n");
+        message += ("20-Peso Coin : " + getLatestMachine().getMoneyCompartment().getCoin20()+"\n");
+        message += ("20-Peso Bill : " + getLatestMachine().getMoneyCompartment().getBill20()+"\n");
+        message += ("50-Peso Bill : " + getLatestMachine().getMoneyCompartment().getBill50()+"\n");
+        message += ("100-Peso Bill : " + getLatestMachine().getMoneyCompartment().getBill100()+"\n");        
+
+        return message; 
+    }
+    public void clearMoneyCompartment(){
+        getLatestMachine().getMoneyCompartment().setCoin1(-getLatestMachine().getMoneyCompartment().getCoin1());
+        getLatestMachine().getMoneyCompartment().setCoin5(-getLatestMachine().getMoneyCompartment().getCoin5());
+        getLatestMachine().getMoneyCompartment().setCoin10(-getLatestMachine().getMoneyCompartment().getCoin10());
+        getLatestMachine().getMoneyCompartment().setCoin20(-getLatestMachine().getMoneyCompartment().getCoin20());
+        getLatestMachine().getMoneyCompartment().setBill20(-getLatestMachine().getMoneyCompartment().getBill20());
+        getLatestMachine().getMoneyCompartment().setBill50(-getLatestMachine().getMoneyCompartment().getBill50());
+        getLatestMachine().getMoneyCompartment().setBill100(-getLatestMachine().getMoneyCompartment().getBill100());
+    }
 
 }

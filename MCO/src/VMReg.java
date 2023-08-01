@@ -134,7 +134,6 @@ public class VMReg {
                         this.moneyCompartment.setBill20(payment.getBill20());
                         this.moneyCompartment.setBill50(payment.getBill50());
                         this.moneyCompartment.setBill100(payment.getBill100());
-                        this.moneyCompartment.setBill500(payment.getBill500());
                         payment = null; 
                         dispenseItem(slotChosen-1);
                         this.hasTransacted = true; 
@@ -205,9 +204,6 @@ public class VMReg {
                     case 7: 
                         payment.setBill100(numDenomination);
                         break;
-                    case 8: 
-                        payment.setBill500(numDenomination);
-                        break;
                 }
             }
             else{
@@ -246,10 +242,6 @@ public class VMReg {
         //should be no errors here since nag check change ka na 
         int change = payment-itemToBuy.getPrice();
         while (change > 0){
-            while (change >= 500 && this.moneyCompartment.getBill500() > 0){
-                change -= 500;
-                this.moneyCompartment.setBill500(-1);
-            }
             while (change >= 100 && this.moneyCompartment.getBill100() > 0){
                 change -=100;
                 this.moneyCompartment.setBill100(-1);
@@ -385,7 +377,6 @@ public class VMReg {
                     System.out.println("20-peso bills : " + this.moneyCompartment.getBill20());
                     System.out.println("50-peso bills : " + this.moneyCompartment.getBill50());
                     System.out.println("100-peso bills : " + this.moneyCompartment.getBill100());
-                    System.out.println("500-peso bills : " + this.moneyCompartment.getBill500());
                     System.out.println("Total : " + this.moneyCompartment.getTotalMoney());
                     break;
                 case 7: 
@@ -557,7 +548,6 @@ public class VMReg {
         moneyCompartment.setBill20(-moneyCompartment.getBill20());
         moneyCompartment.setBill50(-moneyCompartment.getBill50());
         moneyCompartment.setBill100(-moneyCompartment.getBill100());
-        moneyCompartment.setBill500(-moneyCompartment.getBill500());
 
     }
 
@@ -618,9 +608,6 @@ public class VMReg {
                         break;
                     case 7: 
                         moneyCompartment.setBill100(numDenomination);
-                        break;
-                    case 8: 
-                        moneyCompartment.setBill500(numDenomination);
                         break;
                 }
             }

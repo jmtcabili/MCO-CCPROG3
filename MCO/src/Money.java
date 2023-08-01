@@ -6,15 +6,14 @@
  * @version 1.0
  */
 public class Money {
-    private int coin1;
-    private int coin5;
-    private int coin10;
-    private int coin20;
-    private int bill20;
-    private int bill50;
-    private int bill100;
-    private int bill500;
-    private int total; 
+    private int coin1 = 0;
+    private int coin5 = 0;
+    private int coin10 = 0;
+    private int coin20 = 0;
+    private int bill20 = 0;
+    private int bill50 = 0;
+    private int bill100 = 0;
+    private int total = 0; 
 
     /** Gathers the one peso coin/s
      * @return the one peso coin/s
@@ -68,9 +67,6 @@ public class Money {
      /** Gathers the 500 peso bill/s
      * @return the 500 peso bill/s
      */
-    public int getBill500 () {
-        return bill500;
-    }
 
      /** Sets the amount of the one peso coin/s
      * @param amount the amount to be added to the one peso coin/s
@@ -124,16 +120,13 @@ public class Money {
     /** Sets the amount of five hundred peso bill/s
      * @param amount the amount to be added to the five hundred peso bill/s
      */
-    public void setBill500 (int amount) {
-        this.bill500 += amount;
-    }
 
     /** Computes for the sum of all the money denominations
      * @return the sum of all the money denominations
      */
     public int getTotalMoney () {
         total = coin1*1 + coin5*5 + coin10*10 + coin20*20 + bill20*20
-                    + bill50*50 + bill100*100 + bill500*500;
+                    + bill50*50 + bill100*100;
 
         return total;
     }

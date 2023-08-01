@@ -50,7 +50,8 @@ public class DriverView {
     //Maintencen Frame components
     private JFrame regularMaintenanceFrame; 
     private JLabel machineName;
-    private JButton addStockBtn, setPriceBtn, collectMoney, backBtn2,
+    private JButton addStockBtn, setPriceBtn, collectMoney, 
+                    transactionBtn, backBtn2,
                     coin1, coin5, coin10, coin20,
                     bill20, bill50, bill100;
     private JTextField itemNameTf, numItemTf, stockPriceTf, 
@@ -58,7 +59,11 @@ public class DriverView {
     private JTextArea totalDenomination, collectedMoney, inventoryM;
     public Object setTestFeaturesBtnListener; 
 
-  
+    //Transaction Frame components
+    private JFrame transactionFrame; 
+    private JLabel transactionhistory; 
+    private JButton backTransactionBtn; 
+    private JTextArea history; 
     
 
     public DriverView(){
@@ -66,6 +71,7 @@ public class DriverView {
         OptionsVMView();
         regularMaintenceFrame();
         itemsInitializationView();
+        transactionFrame();
     }
 
     //Main View
@@ -74,6 +80,7 @@ public class DriverView {
 
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.mainFrame.setSize(600, 800);
+        this.mainFrame.setLocationRelativeTo(null);
         
         this.factoryLabel = new JLabel("Venching Machine Factory");
         this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
@@ -207,6 +214,7 @@ public class DriverView {
 
         this.optionsFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.optionsFrame.setSize(600, 800); 
+        this.optionsFrame.setLocationRelativeTo(null);
 
         JPanel opanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
         this.vmLbl = new JLabel("");
@@ -256,6 +264,7 @@ public class DriverView {
         this.itemInitializationFrame = new JFrame("Vending Machine Factory - Item Initialization");
         this.itemInitializationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.itemInitializationFrame.setSize(600, 800);
+        this.itemInitializationFrame.setLocationRelativeTo(null);
 
         this.initializeItems = new JLabel("Initialize Items: ");
         this.slotsLeft = new JLabel("Slots Left: ");
@@ -360,6 +369,7 @@ public class DriverView {
         this.regularMaintenanceFrame = new JFrame("Vending Machine Factory - Maintenance"); 
         this.regularMaintenanceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.regularMaintenanceFrame.setSize(600, 800);
+        this.regularMaintenanceFrame.setLocationRelativeTo(null);
         
 
         this.machineName = new JLabel("");
@@ -369,6 +379,8 @@ public class DriverView {
         this.addStockBtn = new JButton("Add Stock");
         this.setPriceBtn = new JButton("Set Price");
         this.collectMoney = new JButton("Collect Money");
+        this.transactionBtn = new JButton("Transactions"); 
+
         this.backBtn2 = new JButton("Back");
 
         /*
@@ -406,6 +418,7 @@ public class DriverView {
         this.totalDenomination.setEditable(false);
         this.collectedMoney.setEditable(false);
 
+        transactionBtn.setBounds(27, 30, 150, 54);
         addStockBtn.setBounds(27, 110, 111, 49);
         setPriceBtn.setBounds(154, 110, 121, 49);
         backBtn2.setBounds(420, 30, 150, 54);
@@ -426,8 +439,8 @@ public class DriverView {
         bill100.setBounds(396, 225, 116, 45);
 
         collectMoney.setBounds(373, 547, 154, 54);
-        totalDenomination.setBounds(336, 310, 235, 221);
-        inventoryM.setBounds(33, 280, 200, 390);
+        totalDenomination.setBounds(336, 310, 270, 221);
+        inventoryM.setBounds(33, 280, 230, 390);
         collectedMoney.setBounds(336, 610, 235, 90);
         
         JPanel panel6 = new JPanel();
@@ -439,6 +452,7 @@ public class DriverView {
 
         this.regularMaintenanceFrame.add(machineName);
         this.regularMaintenanceFrame.add(backBtn2);
+        this.regularMaintenanceFrame.add(transactionBtn);
         this.regularMaintenanceFrame.add(addStockBtn);
         this.regularMaintenanceFrame.add(setPriceBtn);
         this.regularMaintenanceFrame.add(itemNameTf);
@@ -459,16 +473,50 @@ public class DriverView {
         regularMaintenanceFrame.setVisible(false);
     }
 
-//Denomination listeners
+    //maintenance listeners
     public void openMaintenanceFrame(){
         this.regularMaintenanceFrame.setVisible(true);
     }
     public void closeMaintenanceFrame(){
         this.regularMaintenanceFrame.setVisible(false);
     }
+        //restock features
+        public void setAddStockBtnListener(ActionListener actionListener){
+            this.addStockBtn.addActionListener(actionListener);
+        }
+        public String getItemName(){
+            return this.itemNameTf.getText();
+        }
+        public String getNumRestock(){
+            return this.numItemTf.getText();
+        }
+        public void clearAddStockFields(){
+            this.itemNameTf.setText("");
+            this.numItemTf.setText("");
+        }
+    
+        //setprice features
+        public void setPriceBtnListener(ActionListener actionListener){
+            this.setPriceBtn.addActionListener(actionListener);
+        }
+        public String getSlotNumber(){
+            return this.slotNumberTf.getText();
+        }
+        public String getNewPrice(){
+            return this.newPriceTf.getText();
+        }
+        public void clearNewPriceFields(){
+            this.slotNumberTf.setText("");
+            this.newPriceTf.setText("");
+        }
+    
     public void setBackBtn2Listener(ActionListener actionListener){
         this.backBtn2.addActionListener(actionListener);
     }
+    public void setInventoryM(String text){
+        this.inventoryM.setText(text);
+    }
+
     public void setCoin1Listener(ActionListener actionListener) {
         this.coin1.addActionListener(actionListener);
     }
@@ -484,8 +532,56 @@ public class DriverView {
     public void setBill20Listener(ActionListener actionListener) {
         this.bill20.addActionListener(actionListener);
     }
-
+    public void setBill50Listener(ActionListener actionListener) {
+        this.bill50.addActionListener(actionListener);
+    }
+    public void setBill100Listener(ActionListener actionListener) {
+        this.bill100.addActionListener(actionListener);
+    }
+    public void setTotalDenomination(String text){
+        this.totalDenomination.setText(text);
+    }
+    public void setCollectedMoney(String text){
+        this.collectedMoney.setText(text);
+    }
+    public void setCollectMoneyBtnListener(ActionListener actionListener){
+        this.collectMoney.addActionListener(actionListener);
+    }
+    public void setTransactionBtnListener(ActionListener actionListener){
+        this.transactionBtn.addActionListener(actionListener);
+    }
     
+    public void transactionFrame(){
+        this.transactionFrame = new JFrame("Vending Machine Factory - Transaction History");
+        this.transactionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.transactionFrame.setSize(600, 800);
+        this.transactionFrame.setLocationRelativeTo(null);
+
+        this.transactionhistory = new JLabel("Transaction History");
+        
+        this.backTransactionBtn = new JButton("Back");
+
+        this.history = new JTextArea("");
+
+        transactionhistory.setBounds(79, 83, 161, 15);
+        backTransactionBtn.setBounds(389, 64, 154, 54);
+        history.setBounds(48, 161, 495, 562);
+
+        transactionFrame.add(transactionhistory);
+        transactionFrame.add(backTransactionBtn);
+        transactionFrame.add(history);
+
+        transactionFrame.setVisible(false);
+    } 
+    public void openTransactionFrame(){
+        transactionFrame.setVisible(true);
+    }
+    public void closeTransactionFrame(){
+        transactionFrame.dispose();
+    }
+    public void setBackTransactionBtnListener(ActionListener actionListener){
+        this.backTransactionBtn.addActionListener(actionListener);
+    }
     
     
 }
