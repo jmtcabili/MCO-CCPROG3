@@ -1,3 +1,4 @@
+
 import java.util.*; //THIS IS THE MOST UPDATED VMREG
 /**
  * This class is responsible for most of the main functions of the vending machine.
