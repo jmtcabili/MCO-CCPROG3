@@ -2,12 +2,12 @@ public class testChange {
     public static void main(String args[]){
         Money compartment = new Money(); 
         Money payment = new Money();
-        int price = 367; 
+        int price = 451; 
 
-        compartment.setBill100(123);
-        compartment.setBill50(4);
+        compartment.setBill100(0);
+        compartment.setBill50(9);
         compartment.setCoin5(3);
-        compartment.setCoin1(3);
+        compartment.setCoin1(0);
         //compartment.setCoin5(3);
         //compartment.setCoin1(5);
         payment.setBill100(2);
