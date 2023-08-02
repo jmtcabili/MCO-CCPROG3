@@ -14,7 +14,7 @@ public class VMReg {
     private boolean isInitialized = false; 
     protected Money moneyCompartment;
     protected int numTransactions;
-    protected ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+    protected ArrayList<Transaction> transactions;
     protected boolean justStocked; 
     protected boolean hasTransacted; 
 
@@ -28,6 +28,7 @@ public class VMReg {
         this.slots = new Slot[slotCount];
         this.slotItemLimit = slotItemLimit;
         this.moneyCompartment = new Money(); 
+        this.transactions = new ArrayList<Transaction>();
         this.numTransactions = 0; 
         this.justStocked = false; 
         this.hasTransacted = false; 
@@ -40,7 +41,7 @@ public class VMReg {
 
     public String returnInventory(){
         int i = 0; 
-        String message = "Inventory: \n";
+        String message = "INVENTORY: \n";
         while (i < this.slots.length && slots[i] != null){
             message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + "Php - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs - " + slots[i].getItem().getClass().getName() + "\n");
             i++;
@@ -51,6 +52,8 @@ public class VMReg {
     public void setInitialized(boolean bool){
         this.isInitialized = bool; 
     }
+
+
 
 
 
@@ -114,18 +117,18 @@ public class VMReg {
                         System.out.println("Your change is : " + (payment.getTotalMoney() - slots[slotChosen-1].getItem().getPrice()));
                         if (this.justStocked == true){
                             
-                            Transaction startTransaction = new Transaction();
-                            transactions.add(startTransaction);
+                           // Transaction startTransaction = new Transaction();
+                           // transactions.add(startTransaction);
                             int k = 0; 
                             while (k < slots.length && slots[k] != null){
-                                transactions.get(numTransactions).addStartingSlot(slots[k]);     
+                                //transactions.get(numTransactions).addStartingSlot(slots[k]);     
                                 k++;                      
                             }  
                             justStocked = false; 
                         }
 
-                        this.transactions.get(numTransactions).setCollectedMoney(slots[slotChosen-1].getItem().getPrice());
-                        this.transactions.get(numTransactions).addItemSold(slots[slotChosen-1].getItem());
+                        //this.transactions.get(numTransactions).setCollectedMoney(slots[slotChosen-1].getItem().getPrice());
+                        //this.transactions.get(numTransactions).addItemSold(slots[slotChosen-1].getItem());
                         //produceChange(payment.getTotalMoney(), slots[slotChosen-1].getItem());
                         this.moneyCompartment.setCoin1(payment.getCoin1());
                         this.moneyCompartment.setCoin5(payment.getCoin5());
@@ -388,12 +391,12 @@ public class VMReg {
                 case 7: 
                     int j = 0;
                     if (numTransactions != 0){
-                        while (j < transactions.size()){
-                            transactions.get(j).printDetails(transactions.size());
-                            j++;
+                       // while (j < transactions.size()){
+                          //  transactions.get(j).printDetails(transactions.size());
+                           // j++;
                         }
-                    } else
-                        System.out.println("Please restock/stock again to conclude transaction history");
+                   // } else
+                      //  System.out.println("Please restock/stock again to conclude transaction history");
                     
 
                 default: 
@@ -419,7 +422,7 @@ public class VMReg {
             System.out.println(numTransactions);
             int k = 0; 
             while (k < slots.length && slots[k] != null){
-                transactions.get(numTransactions).addEndingslot(slots[k]);
+              //  transactions.get(numTransactions).addEndingslot(slots[k]);
                 k++;
             }
 
@@ -499,7 +502,7 @@ public class VMReg {
         int k = 0; 
         if (justStocked == false && hasTransacted == true){
             while (k < slots.length && slots[k] != null){
-                transactions.get(numTransactions).addEndingslot(slots[k]);
+              // transactions.get(numTransactions).addEndingslot(slots[k]);
                 k++;
             }
             numTransactions++;
@@ -702,13 +705,6 @@ public class VMReg {
      */
     public ArrayList<Transaction> getTransactions() {
         return transactions;
-    }
-
-    /** Sets the array list of transactions
-     * @param transactions is the array list of transactions
-     */
-    public void setTransactions(ArrayList<Transaction> transactions) {
-        this.transactions = transactions;
     }
 
     /** Determines if an item is just stocked

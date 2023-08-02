@@ -17,6 +17,14 @@ public class Slot {
         this.item = item;
         this.itemList = new ArrayList<Item>(); 
     }
+    public Slot (Item item, int quantity) {
+        this.item = item;
+        this.itemList = new ArrayList<Item>(); 
+        for (int i = 1; i <= quantity; i++){
+            itemList.add(item);
+        }
+    }
+
 
     /** Gathers the number of items inside the slot
      * @return the number of items inside the slot
@@ -29,6 +37,11 @@ public class Slot {
     }
     public int getNumItem () {
         return itemList.size();
+    }
+
+    public void sellItem(){
+        int lastIndex = this.itemList.size()-1;
+        this.itemList.remove(lastIndex);
     }
 
     /** Gathers the item to be placed inside the slot

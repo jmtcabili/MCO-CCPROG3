@@ -47,7 +47,7 @@ public class DriverController {
                 driverView.clearTextFields();
             }
         });
-
+    
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (driverModel.getLatestMachine().getIsInitialized() == false){
@@ -123,6 +123,8 @@ public class DriverController {
                             driverModel.getLatestMachine().displayItems();
                             driverView.setFeedbackItem("Added");
                             if (driverModel.countEmptySlot() == 0){
+                                Transaction transaction = new Transaction(driverModel.getLatestMachine().getSlots());
+                                driverModel.getLatestMachine().getTransactions().add(transaction);
                                 driverModel.getLatestMachine().setInitialized(true);
                                 driverView.openOptionsFrame();
                                 driverView.closeInitializeItems();
@@ -150,6 +152,7 @@ public class DriverController {
             @Override
             public void actionPerformed(ActionEvent e){
                 driverView.openRegularTestFrame();
+                driverView.closeOptionsFrame();
                 driverView.setMachineLabel(driverModel.getLatestMachine().getName());
                 driverView.clearDisplay();
             }
@@ -178,6 +181,8 @@ public class DriverController {
                     if(driverModel.findSlotIdx(temp) != -1){
                         int slotIdx = driverModel.findSlotIdx(temp);
                         driverModel.getLatestMachine().getSlots()[slotIdx].stockItem(temp, numRestock);
+                        Transaction transaction = new Transaction(driverModel.getLatestMachine().getSlots());
+                        driverModel.getLatestMachine().getTransactions().add(transaction);
                     }
                     driverView.setInventoryM(driverModel.getLatestMachine().returnInventory());
                 }
@@ -205,6 +210,7 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 driverView.openTransactionFrame();
                 driverView.closeMaintenanceFrame();
+                driverView.setHistoryTA(driverModel.returnTransactions());
             }
         });
         this.driverView.setBackBtn2Listener(new ActionListener() {
@@ -368,8 +374,10 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 //TODO: ERROR HANDLING IF SLOT NUM INPUTTED IS OUT OF BOUNDS
                 int slotInput = Integer.parseInt(driverView.getSlotNum1());
-                driverView.addToTextDisplay3("Picked: " + driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName());
-                driverView.setTextDisplay2(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                if (slotInput > 0 && slotInput <= driverModel.getLatestMachine().getSlots().length){
+                    driverView.addToTextDisplay3("Picked: " + driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName());
+                    driverView.setTextDisplay2(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                }
             }
         });
 
@@ -382,27 +390,56 @@ public class DriverController {
                 
                 if (slotInput-1 >= 0 && slotInput-1 < driverModel.getLatestMachine().getSlots().length){
                     int price = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice();
-                    System.out.println(price);
-                    System.out.println(driverModel.getPayment().getTotalMoney());
-                    if (driverModel.getPayment().getTotalMoney() >= price){
+                    Item itemToBuy = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem();
+                    int stock = driverModel.getLatestMachine().getSlots()[slotInput-1].getNumItem();
 
-                        driverModel.addToMoney(tempPayment);
-                        int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
-                        if (driverModel.getLatestMachine().produceChange(change, price)){
-                            driverView.addToTextDisplay3("Change is: " + change);
-                            driverModel.clearPayment();
+                    if (stock > 0){
+                        if (driverModel.getPayment().getTotalMoney() >= price){
 
-                        }else
-                            driverView.addToTextDisplay3("Not enough change");
+                            driverModel.addToMoney(tempPayment);
+                            int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                            if (driverModel.getLatestMachine().produceChange(change, price)){
+                                driverView.addToTextDisplay3("Change is: " + change);
+                                driverModel.clearPayment();
+                                //add item to itemsSold to certain transaction
+                                int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
+                                driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToBuy);
+                                driverModel.getLatestMachine().getSlots()[slotInput-1].sellItem();
+                                driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                driverView.clearDisplay();
+                            }else
+                                driverView.addToTextDisplay3("Not enough change");
 
-                    } else
-                        driverView.addToTextDisplay3("Insufficient payment");
+                        } else
+                            driverView.addToTextDisplay3("Insufficient payment");
+                    }else
+                        driverView.addToTextDisplay3("No stock");
                     
                 }else
 
                 //int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
                 //driverView.setTextDisplayBuy3(change);
                 driverView.setTextDisplay1(0);
+            }
+        });
+
+        this.driverView.setToBagBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                if (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem() instanceof Rice) {
+                    Rice rice = new Rice(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName(),
+                                        driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getCalories(),
+                                        driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+
+                }
+            }
+        });
+
+        this.driverView.setCustomBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+
             }
         });
 

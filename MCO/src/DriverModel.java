@@ -9,8 +9,11 @@ public class DriverModel {
     }
 
     public void addMachine(String name, String slotcount, String itemCount, String VMtype){
-
-        this.machineList.add(new VMReg(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount)));
+        
+        if (VMtype.equals("Special"))
+            this.machineList.add(new VMSpecial(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount)));
+        else
+            this.machineList.add(new VMReg(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount)));
         //add a condition to check if vmtype is special or regular
     }
 
@@ -53,7 +56,7 @@ public class DriverModel {
         String message = ""; 
 
         for (int i = 0; i < machineList.size(); i++){
-            message+= ((i+1) + ".) " + machineList.get(i).getName()+"\n");
+            message+= ((i+1) + ".) " + machineList.get(i).getName()+ " - " + machineList.get(i).getClass().getName() + "\n");
             System.out.println(message);
         }
         return message; 
@@ -137,5 +140,33 @@ public class DriverModel {
         this.payment.setBill20(-payment.getBill20());
         this.payment.setBill50(-payment.getBill50());
         this.payment.setBill100(-payment.getBill100());
+    }
+    public String returnTransactions(){
+        String message = "";
+
+        for (int j = 0; j < getLatestMachine().getTransactions().size(); j++){
+            //starting inventory
+            message += "STARTING INVENTORY - " + (j+1) + "\n";
+            Slot[] tempStart = getLatestMachine().getTransactions().get(j).getStartingInventory();
+            int k = 0; 
+            while (k < getLatestMachine().getTransactions().get(j).getStartingInventory().length &&  getLatestMachine().getTransactions().get(j).getStartingInventory()[k] != null){
+                message += ((k+1) + ".) " + tempStart[k].getItem().getName() + " - " + tempStart[k].getItem().getPrice() + "Php - " + tempStart[k].getItem().getCalories() + " cal - " + tempStart[k].getNumItem()+" pcs \n");
+                k++;
+            }
+            //current inventory
+            message += getLatestMachine().returnInventory();
+
+            //items sold
+            message += "Total items sold: " + getLatestMachine().getTransactions().get(j).getItemsSold().size();
+            for (int i = 0; i < getLatestMachine().getTransactions().get(j).getItemsSold().size(); i++){
+                message += ((i+1) + ".) " + getLatestMachine().getTransactions().get(j).getItemsSold().get(i).getName());
+            
+            message += "\n";
+        }
+        }
+
+        
+
+        return message; 
     }
 }

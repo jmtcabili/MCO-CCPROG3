@@ -77,7 +77,8 @@ public class DriverView {
 
     private JButton  denom20B_Btn, denom50B_Btn,
                     denom100B_Btn, denom1C_Btn, denom5C_Btn, denom10C_Btn,
-                    denom20C_Btn, backBtn3, clearButton, slotNum, buy_Btn;
+                    denom20C_Btn, backBtn3, clearButton, slotNum, buy_Btn, customBtn,
+                    toBagBtn;
 
     private JTextArea display1, display2, display3, inventoryTest; 
 
@@ -616,14 +617,16 @@ public class DriverView {
         this.backTransactionBtn = new JButton("Back");
 
         this.history = new JTextArea("");
+        this.history.setEditable(false);
 
         transactionhistory.setBounds(79, 83, 161, 15);
         backTransactionBtn.setBounds(389, 64, 154, 54);
-        history.setBounds(48, 161, 495, 562);
+        history.setBounds(48, 200, 300, 500);
 
         transactionFrame.add(transactionhistory);
         transactionFrame.add(backTransactionBtn);
         transactionFrame.add(history);
+        
 
         transactionFrame.setVisible(false);
     } 
@@ -635,6 +638,9 @@ public class DriverView {
     }
     public void setBackTransactionBtnListener(ActionListener actionListener){
         this.backTransactionBtn.addActionListener(actionListener);
+    }
+    public void setHistoryTA(String text){
+        this.history.setText(text);
     }
     
     public void regularVendingFrame(){
@@ -661,6 +667,8 @@ public class DriverView {
         this.denom20C_Btn = new JButton("20");
         this.clearButton = new JButton("Clear");
         this.backBtn3 = new JButton("Back");
+        this.customBtn = new JButton("Get Custom Item");
+        this.toBagBtn = new JButton("To Bag");
     
         this.display1 = new JTextArea("Amount Inserted: ");
         this.display2 = new JTextArea("Amount Needed: ");
@@ -692,6 +700,8 @@ public class DriverView {
         this.numText.setBounds(183, 153, 156, 36);
         this.inventoryTest.setBounds(9, 237, 330, 394);
         this.buy_Btn.setBounds(12, 194, 156, 36);
+        this.customBtn.setBounds(362, 673, 204, 64);
+        this.toBagBtn.setBounds(183, 194, 156, 36);
     
     
         regularTestFrame.add(factoryLabel);
@@ -712,6 +722,8 @@ public class DriverView {
         regularTestFrame.add(numText);
         regularTestFrame.add(inventoryTest);
         regularTestFrame.add(buy_Btn);
+        regularTestFrame.add(customBtn);
+        regularTestFrame.add(toBagBtn);
     
     
         regularTestFrame.setResizable(false);
@@ -766,6 +778,12 @@ public class DriverView {
         public void setBuyBtn(ActionListener actionListener){
             this.buy_Btn.addActionListener(actionListener);
         }
+        public void setCustomBtn(ActionListener actionListener) {
+            this.customBtn.addActionListener(actionListener);
+        }
+        public void setToBagBtn(ActionListener actionListener){
+            this.toBagBtn.addActionListener(actionListener);
+        }
         public void setTextDisplay1(int total){
             this.display1.setText("Amount Inserted: " + total);
         }
@@ -780,6 +798,9 @@ public class DriverView {
         }
         public String getSlotNum1(){
             return this.numText.getText();
+        }
+        public void setVendingType(){
+            this.customBtn.setVisible(false);
         }
 }
     
