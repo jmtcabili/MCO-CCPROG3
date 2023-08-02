@@ -65,6 +65,17 @@ public class DriverView {
     private JButton backTransactionBtn; 
     private JTextArea history; 
     
+    //Test Vending Feature Components
+    private JFrame regularTestFrame; 
+
+    private JLabel machineNameT;
+
+    private JButton item_Btn, item1_Btn, item2_Btn, item3_Btn, item4_Btn, 
+                    item5_Btn, item6_Btn, item7_Btn, item8_Btn, item9_Btn,
+                    item10_Btn, item11_Btn, denom20B_Btn, denom50B_Btn,
+                    denom100B_Btn, denom1C_Btn, denom5C_Btn, denom10C_Btn,
+                    denom20C_Btn;
+    private JTextArea display1, display2, display3; 
 
     public DriverView(){
         MainView(); 
@@ -583,5 +594,5 @@ public class DriverView {
         this.backTransactionBtn.addActionListener(actionListener);
     }
     
-    
+
 }
