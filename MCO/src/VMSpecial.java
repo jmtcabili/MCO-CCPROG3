@@ -392,7 +392,7 @@ public class VMSpecial extends VMReg {
                             }
                         }
 
-                        if (orderBag.get(k).getItem() instanceof Sauce) {
+                        if (orderBag.get(k).getItem() instanceof Veggie) {
                             System.out.println("Marinating with " +orderBag.get(k).getItem().getName() + "...");
                             try{
                                 Thread.sleep(2000);

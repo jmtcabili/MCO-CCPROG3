@@ -42,7 +42,7 @@ public class VMReg {
         int i = 0; 
         String message = "Inventory: \n";
         while (i < this.slots.length && slots[i] != null){
-            message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + " pesos - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs\n");
+            message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + " pesos - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs - " + slots[i].getItem().getClass().getName() + "\n");
             i++;
         }
         return message; 

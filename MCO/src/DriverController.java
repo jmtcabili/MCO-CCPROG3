@@ -51,6 +51,7 @@ public class DriverController {
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (driverModel.getLatestMachine().getIsInitialized() == false){
+                    driverView.setInventoryText("Inventory: \n");
                     driverView.openInitializeItems();
                     driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
                 }else{
@@ -91,18 +92,40 @@ public class DriverController {
                             driverView.setFeedbackItem("Duplicate Found!");
                         } 
                         else{
-                            Item item = new Item(itemName, calories, price); //creates item instance
-                            Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
-                            slot.stockItem(item, quantity);
-                            driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            if (driverView.isRice()){
+                                Rice item = new Rice(itemName, calories, price);
+                                Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                                slot.stockItem(item, quantity);
+                                driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            } 
+                            else if (driverView.isMeat()){
+                                Meat item = new Meat(itemName, calories, price);
+                                Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                                slot.stockItem(item, quantity);
+                                driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            }
+                            else if (driverView.isVeggie()){
+                                Veggie item = new Veggie(itemName, calories, price);
+                                Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                                slot.stockItem(item, quantity);
+                                driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            }
+                            else if (driverView.isExtra()){
+                                Extra item = new Extra (itemName, calories, price);
+                                Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                                slot.stockItem(item, quantity);
+                                driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            }
                             driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
                             driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
                             driverModel.getLatestMachine().displayItems();
+                            driverView.setFeedbackItem("Added");
                             if (driverModel.countEmptySlot() == 0){
                                 driverModel.getLatestMachine().setInitialized(true);
                                 driverView.openOptionsFrame();
                                 driverView.closeInitializeItems();
                             }
+
                         }
                     }
                 }

@@ -2,8 +2,10 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.Action;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -44,8 +46,10 @@ public class DriverView {
     private JLabel initializeItems, item, price, calories, quantity,
                    slotsLeft, feedback; 
     private JButton addItemBtn;
+    private JRadioButton rice, meat, veggie, extra;
     private JTextField itemTf, priceTf, caloriesTf, quantityTf; 
     private JTextArea inventoryI; 
+    private ButtonGroup type; 
 
     //Maintencen Frame components
     private JFrame regularMaintenanceFrame; 
@@ -291,31 +295,47 @@ public class DriverView {
         this.quantityTf = new JTextField();
 
         this.addItemBtn = new JButton("Add Item");
+        this.rice = new JRadioButton("Rice");
+        this.meat = new JRadioButton("Meat");
+        this.veggie = new JRadioButton("Veggie");
+        this.extra = new JRadioButton("Extra");
+        this.type = new ButtonGroup();
+
+        this.rice.setBounds(201, 326, 70, 19);
+        this.meat.setBounds(201, 352, 70, 19);
+        this.veggie.setBounds(311, 326, 70, 19);
+        this.extra.setBounds(311, 352, 70, 19);
+
+        type.add(rice);
+        type.add(meat);
+        type.add(veggie);
+        type.add(extra);
+
         this.feedback = new JLabel("");
 
         this.inventoryI = new JTextArea("Inventory: "); 
         this.inventoryI.setEditable(false);
-        inventoryI.setBounds(75, 400, 449, 310);
+        inventoryI.setBounds(75, 453, 449, 310);
         JPanel inventoryPanel = new JPanel(); 
         inventoryPanel.setLayout(null);
         inventoryPanel.add(inventoryI);
 
         initializeItems.setBounds(246, 41, 108, 19);
-        slotsLeft.setBounds(199, 97, 101, 11);
-        item.setBounds(199, 145, 87, 19);
-        itemTf.setBounds(308, 141, 160, 27);
-        price.setBounds(199, 189, 87, 19);
-        priceTf.setBounds(308, 189, 160, 27);
-        calories.setBounds(199, 233, 87, 19);
-        caloriesTf.setBounds(308, 233, 160, 27);
-        quantity.setBounds(199, 277, 87, 19);
-        quantityTf.setBounds(308, 277, 160, 27);
+        slotsLeft.setBounds(114, 97, 101, 11);
+        item.setBounds(165, 145, 87, 19);
+        itemTf.setBounds(274, 141, 160, 27);
+        price.setBounds(165, 189, 87, 19);
+        priceTf.setBounds(274, 189, 160, 27);
+        calories.setBounds(165, 233, 87, 19);
+        caloriesTf.setBounds(274, 233, 160, 27);
+        quantity.setBounds(165, 277, 87, 19);
+        quantityTf.setBounds(274, 277, 160, 27);
         
-        addItemBtn.setBounds(97, 349, 189, 48);
-        feedback.setBounds(308, 357, 160, 33);
+        addItemBtn.setBounds(113, 388, 189, 40);
+        feedback.setBounds(324, 396, 160, 33);
         
 
-        inventoryPanel.setBounds(75, 400, 449, 310);
+        inventoryPanel.setBounds(75, 453, 449, 310);
         
         itemInitializationFrame.add(initializeItems);
         itemInitializationFrame.add(slotsLeft);
@@ -327,6 +347,10 @@ public class DriverView {
         itemInitializationFrame.add(caloriesTf);
         itemInitializationFrame.add(quantity);
         itemInitializationFrame.add(quantityTf);
+        itemInitializationFrame.add(rice);
+        itemInitializationFrame.add(meat);
+        itemInitializationFrame.add(veggie);
+        itemInitializationFrame.add(extra);
         itemInitializationFrame.add(addItemBtn);
         itemInitializationFrame.add(feedback);
         itemInitializationFrame.add(inventoryPanel);
@@ -339,6 +363,18 @@ public class DriverView {
     }
     public void closeInitializeItems(){
         this.itemInitializationFrame.dispose();
+    }
+    public boolean isRice(){
+        return this.rice.isSelected();
+    }
+    public boolean isMeat(){
+        return this.meat.isSelected();
+    }
+    public boolean isVeggie(){
+        return this.veggie.isSelected();
+    }
+    public boolean isExtra(){
+         return this.extra.isSelected();
     }
     public void setAddItmBtlnListener(ActionListener actionListener){
         this.addItemBtn.addActionListener(actionListener);
@@ -370,13 +406,14 @@ public class DriverView {
     }
     public void setSlotsLeft(String text){
         this.slotsLeft.setText(text);
-    }
-    
+    }   
     public void clearItemInitializeFields(){
         this.itemTf.setText("");
         this.priceTf.setText("");
         this.caloriesTf.setText("");
         this.quantityTf.setText("");
+        this.type.clearSelection();
+
     }
 
     //regular maintenance view
@@ -455,7 +492,7 @@ public class DriverView {
 
         collectMoney.setBounds(373, 547, 154, 54);
         totalDenomination.setBounds(336, 310, 270, 221);
-        inventoryM.setBounds(33, 280, 230, 390);
+        inventoryM.setBounds(33, 280, 260, 390);
         collectedMoney.setBounds(336, 610, 235, 90);
         
         JPanel panel6 = new JPanel();
