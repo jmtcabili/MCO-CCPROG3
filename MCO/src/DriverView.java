@@ -617,15 +617,24 @@ public class DriverView {
         this.backTransactionBtn = new JButton("Back");
 
         this.history = new JTextArea("");
+
+
+        JScrollPane scroll = new JScrollPane(history);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+
         this.history.setEditable(false);
 
-        transactionhistory.setBounds(79, 83, 161, 15);
         backTransactionBtn.setBounds(389, 64, 154, 54);
-        history.setBounds(48, 200, 300, 500);
+        scroll.setBounds(48, 161, 495, 562);
+        transactionhistory.setBounds(79, 83, 161, 15);
+        
+        
+
 
         transactionFrame.add(transactionhistory);
         transactionFrame.add(backTransactionBtn);
-        transactionFrame.add(history);
+        transactionFrame.add(scroll);
         
 
         transactionFrame.setVisible(false);
@@ -673,8 +682,10 @@ public class DriverView {
         this.display1 = new JTextArea("Amount Inserted: ");
         this.display2 = new JTextArea("Amount Needed: ");
         this.display3 = new JTextArea();
+
         JScrollPane scroll = new JScrollPane(display3);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
         this.display1.setEditable(false);
         this.display2.setEditable(false);
         this.display3.setEditable(false);
@@ -693,7 +704,7 @@ public class DriverView {
         this.denom20C_Btn.setBounds(100, 712, 65, 55);
         this.display1.setBounds(367, 146, 195, 25);
         this.display2.setBounds(367, 195, 195, 25);
-        this.display3.setBounds(367, 237, 195, 394);
+        scroll.setBounds(367, 237, 195, 394);
         this.backBtn3.setBounds(476, 47, 100, 54);
         this.clearButton.setBounds(362, 47, 100, 54);
         this.slotNum.setBounds(12, 153, 156, 36);
@@ -714,7 +725,6 @@ public class DriverView {
         regularTestFrame.add(denom20C_Btn);
         regularTestFrame.add(display1);
         regularTestFrame.add(display2);
-        regularTestFrame.add(display3);
         regularTestFrame.add(scroll);
         regularTestFrame.add(clearButton);
         regularTestFrame.add(backBtn3);
@@ -725,10 +735,17 @@ public class DriverView {
         regularTestFrame.add(customBtn);
         regularTestFrame.add(toBagBtn);
     
-    
+        customBtn.setVisible(false);
+        toBagBtn.setVisible(false);
         regularTestFrame.setResizable(false);
         regularTestFrame.setLayout(null);
         this.regularTestFrame.setVisible(false);
+        }
+        public void setCustomSeen(boolean x){
+            this.customBtn.setVisible(x);
+        }
+        public void setToBagSeen(boolean x){
+            this.toBagBtn.setVisible(x);
         }
         public void openRegularTestFrame(){
           this.regularTestFrame.setVisible(true);

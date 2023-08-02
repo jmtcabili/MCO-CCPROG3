@@ -151,6 +151,13 @@ public class DriverController {
         this.driverView.setTestFeaturesBtnListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
+                if (driverModel.getLatestMachine() instanceof VMSpecial) {
+                    driverView.setCustomSeen(true);
+                    driverView.setToBagSeen(true);
+                } else{
+                    driverView.setCustomSeen(false);
+                    driverView.setToBagSeen(false);
+                }
                 driverView.openRegularTestFrame();
                 driverView.closeOptionsFrame();
                 driverView.setMachineLabel(driverModel.getLatestMachine().getName());
@@ -310,6 +317,17 @@ public class DriverController {
                 driverModel.getPayment().setBill20(-driverModel.getPayment().getBill20());
                 driverModel.getPayment().setBill50(-driverModel.getPayment().getBill50());
                 driverModel.getPayment().setBill100(-driverModel.getPayment().getBill100());
+                /*
+                if (driverModel.getLatestMachine() instanceof VMSpecial){
+                    for (int i = 0; i < driverModel.getVmSpecial().getOrderBag().size(); i++)
+                    {
+                        Item tempItem = driverModel.getVmSpecial().getOrderBag().get(i); 
+                        int slotIdx = driverModel.findSlotIdx(tempItem);
+                        //stocks item for every item seen in order bag
+                        driverModel.getLatestMachine().getSlots()[slotIdx].stockItem(tempItem, 1);
+                    }
+                }
+                */
             }
         });
 
@@ -377,6 +395,7 @@ public class DriverController {
                 if (slotInput > 0 && slotInput <= driverModel.getLatestMachine().getSlots().length){
                     driverView.addToTextDisplay3("Picked: " + driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName());
                     driverView.setTextDisplay2(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                    driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
                 }
             }
         });
@@ -406,7 +425,6 @@ public class DriverController {
                                 driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToBuy);
                                 driverModel.getLatestMachine().getSlots()[slotInput-1].sellItem();
                                 driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
-                                driverView.clearDisplay();
                             }else
                                 driverView.addToTextDisplay3("Not enough change");
 
@@ -416,36 +434,96 @@ public class DriverController {
                         driverView.addToTextDisplay3("No stock");
                     
                 }else
+                    driverView.addToTextDisplay3("Enter valid slot");
 
-                //int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
-                //driverView.setTextDisplayBuy3(change);
-                driverView.setTextDisplay1(0);
             }
         });
 
         this.driverView.setToBagBtn(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                //clear should also clear bag
                 int slotInput = Integer.parseInt(driverView.getSlotNum1());
-                if (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem() instanceof Rice) {
-                    Rice rice = new Rice(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName(),
-                                        driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getCalories(),
-                                        driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
-
-                }
+                
+                if (slotInput-1 >= 0 && slotInput-1 < driverModel.getLatestMachine().getSlots().length){
+                    Item itemToBag = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem();
+                    if (driverModel.getLatestMachine().getSlots()[slotInput-1].getNumItem() > 0){
+                        driverModel.getVmSpecial().getOrderBag().add(itemToBag);
+                        driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                        driverView.addToTextDisplay3(driverModel.displayOrderBag());
+                    }else
+                        driverView.addToTextDisplay3("Can't add to bag");
+                } else
+                    driverView.addToTextDisplay3("Enter valid slot");
+                
             }
         });
 
         this.driverView.setCustomBtn(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
+                int i = 0; 
+                boolean riceFound = false, meatFound = false, veggieFound = false; 
+                Slot[] tempSlot = driverModel.getLatestMachine().getSlots(); 
+                Money tempPayment = driverModel.getPayment(); 
 
+                if (driverModel.getVmSpecial().getOrderBag().size() != 0){
+                    while (i < driverModel.getVmSpecial().getOrderBag().size() && 
+                        (riceFound == false || meatFound == false || veggieFound == false)){
+                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Rice){
+                            riceFound = true; 
+                        }  
+                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Meat){
+                            meatFound = true; 
+                        }
+                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Veggie){
+                            veggieFound = true;                   
+                        }
+                            
+                        i++;
+                    }
+                    if (riceFound == true && meatFound == true && veggieFound == true){
+                        driverView.addToTextDisplay3("Buying custom item");
+                        //check if kaya ng stock
+                        int j = 0; 
+                        boolean enoughStock = true; 
+                        int combinedPrice = 0; 
+
+                        while (j < driverModel.getVmSpecial().getOrderBag().size() && enoughStock == false){
+                            tempSlot[j].sellItem();
+                            combinedPrice += tempSlot[j].getItem().getPrice();
+                            if (tempSlot[j].getNumItem() == -1)
+                                enoughStock = false; 
+                            j++;
+                        }
+                        if (enoughStock){
+                            if (driverModel.getPayment().getTotalMoney() >= combinedPrice){
+                                driverModel.addToMoney(tempPayment);
+                                int change = (driverModel.getPayment().getTotalMoney() - combinedPrice);
+                                if (driverModel.getLatestMachine().produceChange(change, combinedPrice)){
+                                    driverView.addToTextDisplay3("Change is: " + change);
+                                    driverModel.clearPayment();
+                                    //add item to itemsSold to certain transaction
+                                    
+                                    for (int k = 0; k <driverModel.getVmSpecial().getOrderBag().size(); k++){
+                                        int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
+                                        Item itemToSell = driverModel.getVmSpecial().getOrderBag().get(k);
+                                        int slotIdx = driverModel.findSlotIdx(itemToSell);
+                                        driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToSell);
+                                        driverModel.getLatestMachine().getSlots()[slotIdx].sellItem();
+                                    }
+                                    driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                }else
+                                    driverView.addToTextDisplay3("Not enough change");
+                            }
+                        } else
+                            driverView.addToTextDisplay3("Not enough stock");
+                    } else
+                        driverView.addToTextDisplay3("Insufficient ingredients");
+                } else 
+                    driverView.addToTextDisplay3("Order bag is empty");
             }
         });
-
-
-
-        
 
     }
 }

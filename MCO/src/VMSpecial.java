@@ -3,7 +3,7 @@ import java.util.*;
 
 public class VMSpecial extends VMReg {
 
-    private ArrayList<Slot> orderBag = new ArrayList<>();
+    private ArrayList<Item> orderBag = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
     String buffer;
     public VMSpecial(String name, int slotCount, int slotItemLimit) {
@@ -11,6 +11,7 @@ public class VMSpecial extends VMReg {
     }   
     
     private void orderDish () {
+        /*
         int i, j, k;
         int found = 0;
         int num = 0;
@@ -147,7 +148,7 @@ public class VMSpecial extends VMReg {
                             }
                     }
                 }
-            
+                
             }
 
             else if (choice == 3) { // CLEARS ORDER BAG
@@ -173,5 +174,10 @@ public class VMSpecial extends VMReg {
                 System.out.println("- " + orderBag.get(i).getNumItem() + "pc");
             }
         }
+        */
+        
     }
-    
+    public ArrayList<Item> getOrderBag(){
+        return this.orderBag; 
+    }
+}

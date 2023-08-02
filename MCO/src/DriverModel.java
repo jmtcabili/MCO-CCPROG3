@@ -2,21 +2,24 @@ import java.util.*;
 
 public class DriverModel {
     ArrayList<VMReg> machineList = new ArrayList<>();
+    VMSpecial[] vmSpecial = new VMSpecial[1];
+
     private Money payment = new Money();
 
     public DriverModel(){
         this.machineList = new ArrayList<VMReg>();
     }
-
     public void addMachine(String name, String slotcount, String itemCount, String VMtype){
         
-        if (VMtype.equals("Special"))
+        if (VMtype.equals("Special")){
             this.machineList.add(new VMSpecial(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount)));
+            vmSpecial[0] = new VMSpecial(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount));
+        }
         else
             this.machineList.add(new VMReg(name, Integer.parseInt(slotcount), Integer.parseInt(itemCount)));
+            
         //add a condition to check if vmtype is special or regular
     }
-
     public boolean isFound(String name){//for the machine
         boolean isFound = false; 
         int i = 0; 
@@ -28,8 +31,6 @@ public class DriverModel {
         }
         return isFound; 
     }
-   
-
     public int countEmptySlot(){
         int countEmpty = 0; 
         for (int i = 0; i < getLatestMachine().getSlots().length; i++){
@@ -118,7 +119,6 @@ public class DriverModel {
         getLatestMachine().getMoneyCompartment().setBill50(-getLatestMachine().getMoneyCompartment().getBill50());
         getLatestMachine().getMoneyCompartment().setBill100(-getLatestMachine().getMoneyCompartment().getBill100());
     }
-
     public void addToMoney(Money payment){
         getLatestMachine().getMoneyCompartment().setCoin1(payment.getCoin1());
         getLatestMachine().getMoneyCompartment().setCoin5(payment.getCoin5());
@@ -128,7 +128,6 @@ public class DriverModel {
         getLatestMachine().getMoneyCompartment().setBill50(payment.getBill20());
         getLatestMachine().getMoneyCompartment().setBill100(payment.getBill100());
     }
-
     public Money getPayment () {
         return this.payment;
     }
@@ -164,9 +163,18 @@ public class DriverModel {
             message += "\n";
         }
         }
+        return message; 
+    }
+    public VMSpecial getVmSpecial(){
+        return this.vmSpecial[0];
+    }
+    public String displayOrderBag(){
+        String message = "Order Bag: \n";
 
-        
-
+        for (int i = 0; i < vmSpecial[0].getOrderBag().size(); i++){
+            message += ((i+1)+ ".) " + vmSpecial[0].getOrderBag().get(i).getName()+"\n");
+        }
+        message += "\n";
         return message; 
     }
 }
