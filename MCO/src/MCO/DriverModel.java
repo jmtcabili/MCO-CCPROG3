@@ -1,3 +1,4 @@
+package MCO;
 import java.util.*;
 
 /**
@@ -7,8 +8,8 @@ import java.util.*;
  * @version 1.0
  */
 public class DriverModel {
-    ArrayList<VMReg> machineList = new ArrayList<>();
-    VMSpecial[] vmSpecial = new VMSpecial[1];
+    private ArrayList<VMReg> machineList = new ArrayList<>();
+    private VMSpecial[] vmSpecial = new VMSpecial[1];
 
     private Money payment = new Money();
     /** Blueprint of the DriverModel class
@@ -213,7 +214,7 @@ public class DriverModel {
             message += getLatestMachine().returnInventory();
 
             //items sold
-            message += "Total items sold: " + getLatestMachine().getTransactions().get(j).getItemsSold().size();
+            message += "Total items sold: " + getLatestMachine().getTransactions().get(j).getItemsSold().size() + "\n";
             for (int i = 0; i < getLatestMachine().getTransactions().get(j).getItemsSold().size(); i++){
                 message += ((i+1) + ".) " + getLatestMachine().getTransactions().get(j).getItemsSold().get(i).getName());
             

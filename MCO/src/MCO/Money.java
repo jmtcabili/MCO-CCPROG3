@@ -1,3 +1,4 @@
+package MCO;
 
 /**
  * This class contains getters and setters of money

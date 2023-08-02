@@ -1,3 +1,4 @@
+package MCO;
 /**
  * This class contains the main method of the program 
  * @author Johan Marlo T. Cabili

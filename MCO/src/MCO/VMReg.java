@@ -1,3 +1,4 @@
+package MCO;
 
 import java.util.*; 
 /**
@@ -30,8 +31,7 @@ public class VMReg {
         this.moneyCompartment = new Money(); 
         this.transactions = new ArrayList<Transaction>();
         this.numTransactions = 0; 
-        this.justStocked = false; 
-        this.hasTransacted = false; 
+
     }
 
     //new functions

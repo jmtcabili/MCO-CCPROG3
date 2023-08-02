@@ -1,3 +1,4 @@
+package MCO;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -645,15 +646,14 @@ public class DriverView {
 
 
         JScrollPane scroll = new JScrollPane(history);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 
         this.history.setEditable(false);
 
-        backTransactionBtn.setBounds(389, 64, 154, 54);
-        scroll.setBounds(48, 161, 495, 562);
         transactionhistory.setBounds(79, 83, 161, 15);
-        
+        backTransactionBtn.setBounds(389, 64, 154, 54);
+        scroll.setBounds(48, 161, 300, 300);
         
 
 

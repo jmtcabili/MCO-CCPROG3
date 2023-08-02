@@ -1,3 +1,4 @@
+package MCO;
 /**
  * This class contains a subclass of VMReg
  * @author Johan Marlo T. Cabili
