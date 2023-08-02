@@ -92,7 +92,6 @@ public class VMSpecial extends VMReg {
                         this.moneyCompartment.setBill20(payment.getBill20());
                         this.moneyCompartment.setBill50(payment.getBill50());
                         this.moneyCompartment.setBill100(payment.getBill100());
-                        this.moneyCompartment.setBill500(payment.getBill500());
                         payment = null; 
                         dispenseItem(slotChosen-1);
                         this.hasTransacted = true; 
@@ -163,9 +162,6 @@ public class VMSpecial extends VMReg {
                     case 7: 
                         payment.setBill100(numDenomination);
                         break;
-                    case 8: 
-                        payment.setBill500(numDenomination);
-                        break;
                 }
             }
             else{
@@ -183,7 +179,7 @@ public class VMSpecial extends VMReg {
      * @param slotIndex is an index to determine a specific vending machine
      */
     private void dispenseItem(int slotIndex){
-        this.slots[slotIndex].setNumItem(-1);
+        //this.slots[slotIndex].setNumItem(-1);
     }
 
     /** Checks the change to be given to the user
@@ -204,10 +200,6 @@ public class VMSpecial extends VMReg {
         //should be no errors here since nag check change ka na 
         int change = payment-itemToBuy.getPrice();
         while (change > 0){
-            while (change >= 500 && this.moneyCompartment.getBill500() > 0){
-                change -= 500;
-                this.moneyCompartment.setBill500(-1);
-            }
             while (change >= 100 && this.moneyCompartment.getBill100() > 0){
                 change -=100;
                 this.moneyCompartment.setBill100(-1);
@@ -346,8 +338,7 @@ public class VMSpecial extends VMReg {
                 }
 
                 if (isFound == true) {
-                    orderBag.get(found).setNumItem(amountAdded);
-                    slots[choice1-1].setNumItem(-amountAdded);
+
                 }
                 else {
                     Item items = new Item(super.slots[choice1-1].getItem().getName(),
@@ -356,8 +347,8 @@ public class VMSpecial extends VMReg {
 
                     Slot cart = new Slot(items);
                     orderBag.add(cart);
-                    orderBag.get(orderBag.size()-1).setNumItem(amountAdded);
-                    slots[choice1-1].setNumItem(-amountAdded);
+                   // orderBag.get(orderBag.size()-1).setNumItem(amountAdded);
+                   // slots[choice1-1].setNumItem(-amountAdded);
                 }
 
             }
@@ -428,7 +419,7 @@ public class VMSpecial extends VMReg {
                     for (int m = 0; m<orderBag.size(); m++) {
                         if (slots[l].getItem().getName() ==
                             orderBag.get(m).getItem().getName()) {
-                                slots[l].setNumItem(orderBag.get(m).getNumItem());
+                               // slots[l].setNumItem(orderBag.get(m).getNumItem());
                                 orderBag.remove(m);
                             }
                     }
