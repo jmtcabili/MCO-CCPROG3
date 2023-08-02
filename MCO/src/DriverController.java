@@ -82,18 +82,27 @@ public class DriverController {
                     int calories = Integer.parseInt(driverView.getCaloriesTf());
                     int quantity = Integer.parseInt(driverView.getQuantity());
                     if (driverModel.emptySlot() != -1){
-                        //TO-DO: consider duplicate item - Joe
-                        Item item = new Item(itemName, calories, price); //creates item instance
-                        Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
-                        slot.stockItem(item, quantity);
-                        driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
-                        driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
-                        driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
-                        driverModel.getLatestMachine().displayItems();
-                        if (driverModel.countEmptySlot() == 0){
-                            driverModel.getLatestMachine().setInitialized(true);
-                            driverView.openOptionsFrame();
-                            driverView.closeInitializeItems();
+                        //TODO: consider duplicate item - Joe
+                        //TODO: consider if quantity added is more than set quantity - Joe
+                        if (driverModel.itemFound(itemName) != null){
+                            Item item = new Item(itemName, calories, price); //creates item instance
+                            Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                            slot.stockItem(item, quantity);
+                            driverView.setFeedbackItem("Duplicate Found!");
+                        } 
+                        else{
+                            Item item = new Item(itemName, calories, price); //creates item instance
+                            Slot slot = new Slot(item); //creates slot instance, no item is store in itemList
+                            slot.stockItem(item, quantity);
+                            driverModel.getLatestMachine().setSlot(driverModel.emptySlot(), slot);
+                            driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
+                            driverView.setInventoryText(driverModel.getLatestMachine().returnInventory());
+                            driverModel.getLatestMachine().displayItems();
+                            if (driverModel.countEmptySlot() == 0){
+                                driverModel.getLatestMachine().setInitialized(true);
+                                driverView.openOptionsFrame();
+                                driverView.closeInitializeItems();
+                            }
                         }
                     }
                 }
