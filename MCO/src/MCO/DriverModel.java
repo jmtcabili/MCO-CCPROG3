@@ -24,7 +24,7 @@ public class DriverModel {
      * @param name the name of the vending machine
      * @param slotcount the number of slots in a machine
      * @param itemCount the lowest limit for item stock
-     * @param VMType a string represengin the type of vending machine
+     * @param VMtype a string represengin the type of vending machine
      */
     public void addMachine(String name, String slotcount, String itemCount, String VMtype){
         

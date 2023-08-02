@@ -31,8 +31,7 @@ public class Slot {
     }
 
 
-    /** Gathers the number of items inside the slot
-     * @return the number of items inside the slot
+    /** Gathers the number of items inside the slot. Returns the number of items inside the slot
      */
     public void stockItem(Item item, int quantity){
         for (int i = 1; i <= quantity; i++){

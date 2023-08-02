@@ -16,7 +16,7 @@ public class VMSpecial extends VMReg {
     String buffer;
     /** Blueprint of the class VMSpecial
      * @param name name of the item
-     * @param slotcount calories of the item
+     * @param slotCount calories of the item
      * @param slotItemLimit price of the item
      */
     public VMSpecial(String name, int slotCount, int slotItemLimit) {

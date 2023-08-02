@@ -63,7 +63,7 @@ public class Transaction {
     }
 
     /** Gets the items sold
-     * @return the items sold
+     * returns the transaction list 
      */
     public ArrayList<Item> getItemsSold() {
         return transactionList;
@@ -85,7 +85,7 @@ public class Transaction {
 
 
     /** Gets the ending inventory
-     * @return the ending inventory
+     * 
      */
     public void setCollectedMoney(int collectedMoney) {
         this.collectedMoney += collectedMoney;
