@@ -384,14 +384,14 @@ public class DriverController {
                     int price = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice();
                     System.out.println(price);
                     System.out.println(driverModel.getPayment().getTotalMoney());
-                    if (driverModel.getPayment().getTotalMoney() > price){
+                    if (driverModel.getPayment().getTotalMoney() >= price){
 
                         driverModel.addToMoney(tempPayment);
                         int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
-                        if (driverModel.getLatestMachine().produceChange(change,  driverModel.getLatestMachine().getMoneyCompartment(), price)){
+                        if (driverModel.getLatestMachine().produceChange(change, price)){
                             driverView.addToTextDisplay3("Change is: " + change);
                             driverModel.clearPayment();
-                            
+
                         }else
                             driverView.addToTextDisplay3("Not enough change");
 

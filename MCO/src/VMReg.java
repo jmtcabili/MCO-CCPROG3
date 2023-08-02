@@ -238,37 +238,37 @@ public class VMReg {
      * @param payment is the payment inserted in the vending machine
      * @param itemToBuy indicator to determine the price of the item 
      */
-    public boolean produceChange(int change, Money compartment, int price){
+    public boolean produceChange(int change, int price){
         //total ob1 - price = change 
         boolean sufficientChange = false; 
         
         
-        if (change >= 100 && compartment.getBill100() >= change/100){
-            compartment.setBill100(-(change/100));
+        if (change >= 100 && this.moneyCompartment.getBill100() >= change/100){
+            moneyCompartment.setBill100(-(change/100));
             change = change % 100;
         }
-        if (change >= 50 && compartment.getBill50() >= change/50){
-            compartment.setBill50(-(change/50));
+        if (change >= 50 && this.moneyCompartment.getBill50() >= change/50){
+            this.moneyCompartment.setBill50(-(change/50));
             change = change % 50;
         }
-        if (change >= 20 && compartment.getBill20() >= change/20){
-            compartment.setBill20(-(change/20));
+        if (change >= 20 && this.moneyCompartment.getBill20() >= change/20){
+            this.moneyCompartment.setBill20(-(change/20));
             change = change % 20;
         }
-        if (change >= 20 && compartment.getCoin20() >= change/20){
-            compartment.setCoin20(-(change/20));
+        if (change >= 20 && this.moneyCompartment.getCoin20() >= change/20){
+            this.moneyCompartment.setCoin20(-(change/20));
             change = change % 20;
         }
-        if (change >= 10 && compartment.getCoin10() >= change/10){
-            compartment.setCoin10(-(change/10));
+        if (change >= 10 && this.moneyCompartment.getCoin10() >= change/10){
+            this.moneyCompartment.setCoin10(-(change/10));
             change = change % 10;
         }
-        if (change >= 5 && compartment.getCoin5() >= change/5){
-            compartment.setCoin5(-(change/5));
+        if (change >= 5 && this.moneyCompartment.getCoin5() >= change/5){
+            this.moneyCompartment.setCoin5(-(change/5));
             change = change % 5;
         }
-        if (change >= 1 && compartment.getCoin1() >= change/1){
-            compartment.setCoin1(-(change/1));
+        if (change >= 1 && this.moneyCompartment.getCoin1() >= change/1){
+            this.moneyCompartment.setCoin1(-(change/1));
             change = change % 1;
         }
 
