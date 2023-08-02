@@ -2,6 +2,7 @@ import java.util.*;
 
 public class DriverModel {
     ArrayList<VMReg> machineList = new ArrayList<>();
+    private Money payment = new Money();
 
     public DriverModel(){
         this.machineList = new ArrayList<VMReg>();
@@ -115,4 +116,26 @@ public class DriverModel {
         getLatestMachine().getMoneyCompartment().setBill100(-getLatestMachine().getMoneyCompartment().getBill100());
     }
 
+    public void addToMoney(Money payment){
+        getLatestMachine().getMoneyCompartment().setCoin1(payment.getCoin1());
+        getLatestMachine().getMoneyCompartment().setCoin5(payment.getCoin5());
+        getLatestMachine().getMoneyCompartment().setCoin10(payment.getCoin10());
+        getLatestMachine().getMoneyCompartment().setCoin20(payment.getCoin20());
+        getLatestMachine().getMoneyCompartment().setBill20(payment.getBill20());
+        getLatestMachine().getMoneyCompartment().setBill50(payment.getBill20());
+        getLatestMachine().getMoneyCompartment().setBill100(payment.getBill100());
+    }
+
+    public Money getPayment () {
+        return this.payment;
+    }
+    public void clearPayment(){
+        this.payment.setCoin1(-payment.getCoin1());
+        this.payment.setCoin5(-payment.getCoin5());
+        this.payment.setCoin10(-payment.getCoin10());
+        this.payment.setCoin20(-payment.getCoin20());
+        this.payment.setBill20(-payment.getBill20());
+        this.payment.setBill50(-payment.getBill50());
+        this.payment.setBill100(-payment.getBill100());
+    }
 }

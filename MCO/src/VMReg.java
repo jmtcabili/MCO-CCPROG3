@@ -42,7 +42,7 @@ public class VMReg {
         int i = 0; 
         String message = "Inventory: \n";
         while (i < this.slots.length && slots[i] != null){
-            message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + " pesos - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs - " + slots[i].getItem().getClass().getName() + "\n");
+            message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + "Php - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs - " + slots[i].getItem().getClass().getName() + "\n");
             i++;
         }
         return message; 
@@ -126,7 +126,7 @@ public class VMReg {
 
                         this.transactions.get(numTransactions).setCollectedMoney(slots[slotChosen-1].getItem().getPrice());
                         this.transactions.get(numTransactions).addItemSold(slots[slotChosen-1].getItem());
-                        produceChange(payment.getTotalMoney(), slots[slotChosen-1].getItem());
+                        //produceChange(payment.getTotalMoney(), slots[slotChosen-1].getItem());
                         this.moneyCompartment.setCoin1(payment.getCoin1());
                         this.moneyCompartment.setCoin5(payment.getCoin5());
                         this.moneyCompartment.setCoin10(payment.getCoin10());
@@ -238,39 +238,45 @@ public class VMReg {
      * @param payment is the payment inserted in the vending machine
      * @param itemToBuy indicator to determine the price of the item 
      */
-    private void produceChange(int payment, Item itemToBuy){
-        //should be no errors here since nag check change ka na 
-        int change = payment-itemToBuy.getPrice();
-        while (change > 0){
-            while (change >= 100 && this.moneyCompartment.getBill100() > 0){
-                change -=100;
-                this.moneyCompartment.setBill100(-1);
-            }
-            while (change >= 50 && this.moneyCompartment.getBill50() > 0){
-                change -= 50; 
-                this.moneyCompartment.setBill50(-1);
-            }
-            while (change >= 20 && this.moneyCompartment.getBill20() > 0){
-                change -=20;
-                this.moneyCompartment.setBill20(-1);
-            }
-            while (change >= 20 && this.moneyCompartment.getCoin20() > 0){
-                change -= 20; 
-                this.moneyCompartment.setCoin20(-1);
-            }
-            while (change >= 10 && this.moneyCompartment.getCoin10() > 0){
-                change -= 10; 
-                this.moneyCompartment.setCoin10(-1);
-            }
-            while (change >= 5 && this.moneyCompartment.getCoin5() > 0){
-                change -= 5; 
-                this.moneyCompartment.setCoin5(-1);
-            }
-            while (change >= 1 && this.moneyCompartment.getCoin1() > 0){
-                change -=1; 
-                this.moneyCompartment.setCoin1(-1);
-            }
+    public boolean produceChange(int change, Money compartment, int price){
+        //total ob1 - price = change 
+        boolean sufficientChange = false; 
+        
+        
+        if (change >= 100 && compartment.getBill100() >= change/100){
+            compartment.setBill100(-(change/100));
+            change = change % 100;
         }
+        if (change >= 50 && compartment.getBill50() >= change/50){
+            compartment.setBill50(-(change/50));
+            change = change % 50;
+        }
+        if (change >= 20 && compartment.getBill20() >= change/20){
+            compartment.setBill20(-(change/20));
+            change = change % 20;
+        }
+        if (change >= 20 && compartment.getCoin20() >= change/20){
+            compartment.setCoin20(-(change/20));
+            change = change % 20;
+        }
+        if (change >= 10 && compartment.getCoin10() >= change/10){
+            compartment.setCoin10(-(change/10));
+            change = change % 10;
+        }
+        if (change >= 5 && compartment.getCoin5() >= change/5){
+            compartment.setCoin5(-(change/5));
+            change = change % 5;
+        }
+        if (change >= 1 && compartment.getCoin1() >= change/1){
+            compartment.setCoin1(-(change/1));
+            change = change % 1;
+        }
+
+        System.out.println(change);
+        if (change == 0)
+            sufficientChange = true; 
+
+        return sufficientChange; 
     }
 
     

@@ -82,7 +82,9 @@ public class DriverController {
                     int price = Integer.parseInt(driverView.getPriceTf());
                     int calories = Integer.parseInt(driverView.getCaloriesTf());
                     int quantity = Integer.parseInt(driverView.getQuantity());
-                    if (driverModel.emptySlot() != -1){
+                    if (driverModel.emptySlot() != -1 && 
+                        (driverView.isRice())||driverView.isMeat()||
+                         driverView.isExtra()||driverView.isVeggie()){
                         //TODO: consider duplicate item - Joe
                         //TODO: consider if quantity added is more than set quantity - Joe
                         if (driverModel.itemFound(itemName) != null){
@@ -124,16 +126,17 @@ public class DriverController {
                                 driverModel.getLatestMachine().setInitialized(true);
                                 driverView.openOptionsFrame();
                                 driverView.closeInitializeItems();
+                                driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
                             }
 
                         }
-                    }
+                    } else
+                        driverView.setFeedbackItem("Unsuccessful add!");
                 }
                 driverView.clearItemInitializeFields();
             
             }
         });
-
 
         //controls for optinons
         this.driverView.setBackBtnListener(new ActionListener(){
@@ -148,7 +151,7 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 driverView.openRegularTestFrame();
                 driverView.setMachineLabel(driverModel.getLatestMachine().getName());
-                driverView.closeOptionsFrame();
+                driverView.clearDisplay();
             }
         });
         this.driverView.setMaintenanceBtnListener(new ActionListener(){
@@ -277,6 +280,129 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 driverView.openMaintenanceFrame();
                 driverView.closeTransactionFrame();
+            }
+        });
+
+        //controls for test machine
+        
+        this.driverView.setBackbtn3Listener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.openOptionsFrame();
+                driverView.closeRegularTestFrame();
+            }
+        });
+        //coin buttons
+        this.driverView.setClearBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.clearDisplay();
+                driverModel.getPayment().setCoin1(-driverModel.getPayment().getCoin1());
+                driverModel.getPayment().setCoin5(-driverModel.getPayment().getCoin5());
+                driverModel.getPayment().setCoin10(-driverModel.getPayment().getCoin10());
+                driverModel.getPayment().setCoin20(-driverModel.getPayment().getCoin20());
+                driverModel.getPayment().setBill20(-driverModel.getPayment().getBill20());
+                driverModel.getPayment().setBill50(-driverModel.getPayment().getBill50());
+                driverModel.getPayment().setBill100(-driverModel.getPayment().getBill100());
+            }
+        });
+
+        this.driverView.setDenom1CBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setCoin1(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom5CBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setCoin5(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom10CBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setCoin10(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom20CBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setCoin20(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom20BBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setBill20(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom50BBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setBill50(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setDenom100BBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverModel.getPayment().setBill100(1);
+                driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
+            }
+        });
+
+        this.driverView.setSlotNum(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //TODO: ERROR HANDLING IF SLOT NUM INPUTTED IS OUT OF BOUNDS
+                int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                driverView.addToTextDisplay3("Picked: " + driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName());
+                driverView.setTextDisplay2(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+            }
+        });
+
+        this.driverView.setBuyBtn(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                //TODO: ERROR HANDLING IF CHANGE < 0
+                int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                Money tempPayment = driverModel.getPayment(); 
+                
+                if (slotInput-1 >= 0 && slotInput-1 < driverModel.getLatestMachine().getSlots().length){
+                    int price = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice();
+                    System.out.println(price);
+                    System.out.println(driverModel.getPayment().getTotalMoney());
+                    if (driverModel.getPayment().getTotalMoney() > price){
+
+                        driverModel.addToMoney(tempPayment);
+                        int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                        if (driverModel.getLatestMachine().produceChange(change,  driverModel.getLatestMachine().getMoneyCompartment(), price)){
+                            driverView.addToTextDisplay3("Change is: " + change);
+                            driverModel.clearPayment();
+                            
+                        }else
+                            driverView.addToTextDisplay3("Not enough change");
+
+                    } else
+                        driverView.addToTextDisplay3("Insufficient payment");
+                    
+                }else
+
+                //int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                //driverView.setTextDisplayBuy3(change);
+                driverView.setTextDisplay1(0);
             }
         });
 

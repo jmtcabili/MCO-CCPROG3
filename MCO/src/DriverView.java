@@ -3,7 +3,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -73,13 +75,13 @@ public class DriverView {
 
     private JLabel machineNameT;
 
-    private JButton item_Btn, item1_Btn, item2_Btn, item3_Btn, item4_Btn, 
-                    item5_Btn, item6_Btn, item7_Btn, item8_Btn, item9_Btn,
-                    item10_Btn, item11_Btn, denom20B_Btn, denom50B_Btn,
+    private JButton  denom20B_Btn, denom50B_Btn,
                     denom100B_Btn, denom1C_Btn, denom5C_Btn, denom10C_Btn,
-                    denom20C_Btn, backBtn3, clearButton;
+                    denom20C_Btn, backBtn3, clearButton, slotNum, buy_Btn;
 
-    private JTextArea display1, display2; 
+    private JTextArea display1, display2, display3, inventoryTest; 
+
+    private JTextField numText; 
 
     public DriverView(){
         MainView(); 
@@ -636,95 +638,148 @@ public class DriverView {
     }
     
     public void regularVendingFrame(){
-    this.regularTestFrame  = new JFrame("Vending Machine Factory - Regular Vending");
-    this.regularTestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.regularTestFrame.setSize(600, 800);
-    this.regularTestFrame.setLocationRelativeTo(null);
-
-    this.factoryLabel = new JLabel("");
-    this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
+        this.regularTestFrame  = new JFrame("Vending Machine Factory - Regular Vending");
+        this.regularTestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.regularTestFrame.setSize(600, 800);
+        this.regularTestFrame.setLocationRelativeTo(null);
     
-
-    this.item_Btn = new JButton("Item");
-    this.item1_Btn = new JButton("Item");
-    this.item2_Btn = new JButton("Item");
-    this.item3_Btn = new JButton("Item");
-    this.item4_Btn = new JButton("Item");
-    this.item5_Btn = new JButton("Item");
-    this.item6_Btn = new JButton("Item");
-    this.item7_Btn = new JButton("Item");
-    this.item8_Btn = new JButton("Item");
-    this.item9_Btn = new JButton("Item");
-    this.item10_Btn = new JButton("Item");
-    this.item11_Btn = new JButton("Item");
-    this.denom20B_Btn = new JButton("20");
-    this.denom50B_Btn = new JButton("50");
-    this.denom100B_Btn = new JButton("100");
-    this.denom1C_Btn = new JButton("1");
-    this.denom5C_Btn = new JButton("5");
-    this.denom10C_Btn = new JButton("10");
-    this.denom20C_Btn = new JButton("20");
-    this.clearButton = new JButton("Clear");
-    this.backBtn3 = new JButton("Back");
-
-    this.display1 = new JTextArea();
-    this.display2 = new JTextArea();
-    this.display1.setEditable(false);
-    this.display2.setEditable(false);
-
-    ///should be label for vending machine name 
-    //this.createVM_Btn.setBounds(19, 47, 200, 19);
-    this.factoryLabel.setBounds(19, 55, 200, 30);
-    this.item_Btn.setBounds(19, 139, 93, 62);
-    this.item1_Btn.setBounds(131, 139, 93, 62);
-    this.item2_Btn.setBounds(241, 139, 93, 62);
-    this.item3_Btn.setBounds(19, 225, 93, 62);
-    this.item4_Btn.setBounds(131, 225, 93, 62);
-    this.item5_Btn.setBounds(241, 225, 93, 62);
-    this.item6_Btn.setBounds(20, 311, 93, 62);
-    this.item7_Btn.setBounds(132, 311, 93, 62);
-    this.item8_Btn.setBounds(242, 311, 93, 62);
-    this.item9_Btn.setBounds(19, 397, 93, 62);
-    this.item10_Btn.setBounds(131, 397, 93, 62);
-    this.item11_Btn.setBounds(241, 397, 93, 62);
-    this.denom20B_Btn.setBounds(191, 508, 141, 57);
-    this.denom50B_Btn.setBounds(191, 569, 141, 57);
-    this.denom100B_Btn.setBounds(191, 634, 141, 57);
-    this.denom1C_Btn.setBounds(26, 537, 71, 55);
-    this.denom5C_Btn.setBounds(101, 537, 71, 55);
-    this.denom10C_Btn.setBounds(26, 598, 71, 55);
-    this.denom20C_Btn.setBounds(101, 598, 71, 55);
-    this.display1.setBounds(362, 133, 216, 74);
-    this.display2.setBounds(362, 225, 216, 406);
-    this.backBtn3.setBounds(476, 47, 100, 54);
-    this.clearButton.setBounds(362, 47, 100, 54);
-
-
-    regularTestFrame.add(factoryLabel);
+        this.factoryLabel = new JLabel("");
+        this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
+        
     
-    regularTestFrame.add(denom20B_Btn);
-    regularTestFrame.add(denom50B_Btn);
-    regularTestFrame.add(denom100B_Btn);
-    regularTestFrame.add(denom1C_Btn);
-    regularTestFrame.add(denom5C_Btn);
-    regularTestFrame.add(denom10C_Btn);
-    regularTestFrame.add(denom20C_Btn);
-    regularTestFrame.add(display1);
-    regularTestFrame.add(display2);
-    regularTestFrame.add(clearButton);
-    regularTestFrame.add(backBtn3);
+        this.slotNum = new JButton("Slot Number: ");
+        this.buy_Btn = new JButton("Buy");
+        this.numText = new JTextField("");
+        this.inventoryTest = new JTextArea("Inventory:");
 
-    regularTestFrame.setResizable(false);
-    regularTestFrame.setLayout(null);
-    this.regularTestFrame.setVisible(false);
-    }
-    public void openRegularTestFrame(){
-      this.regularTestFrame.setVisible(true);
-    }
-    public void closeRegularTestFrame(){
-    this.regularTestFrame.dispose();
-    }
-    public void setMachineLabel(String text){
-        this.factoryLabel.setText(text);
-    }
+        this.denom20B_Btn = new JButton("20");
+        this.denom50B_Btn = new JButton("50");
+        this.denom100B_Btn = new JButton("100");
+        this.denom1C_Btn = new JButton("1");
+        this.denom5C_Btn = new JButton("5");
+        this.denom10C_Btn = new JButton("10");
+        this.denom20C_Btn = new JButton("20");
+        this.clearButton = new JButton("Clear");
+        this.backBtn3 = new JButton("Back");
+    
+        this.display1 = new JTextArea("Amount Inserted: ");
+        this.display2 = new JTextArea("Amount Needed: ");
+        this.display3 = new JTextArea();
+        JScrollPane scroll = new JScrollPane(display3);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        this.display1.setEditable(false);
+        this.display2.setEditable(false);
+        this.display3.setEditable(false);
+        this.inventoryTest.setEditable(false);
+    
+        ///should be label for vending machine name 
+        //this.createVM_Btn.setBounds(19, 47, 200, 19);
+        //TODO: EDIT DIMENSIONS OF CHANGE DENOMINATIONS
+        this.factoryLabel.setBounds(19, 55, 200, 30);
+        this.denom20B_Btn.setBounds(173, 652, 109, 28);
+        this.denom50B_Btn.setBounds(173, 692, 109, 28);
+        this.denom100B_Btn.setBounds(173, 731, 109, 28);
+        this.denom1C_Btn.setBounds(25, 651, 65, 55);
+        this.denom5C_Btn.setBounds(100, 651, 65, 55);
+        this.denom10C_Btn.setBounds(25, 712, 65, 55);
+        this.denom20C_Btn.setBounds(100, 712, 65, 55);
+        this.display1.setBounds(367, 146, 195, 25);
+        this.display2.setBounds(367, 195, 195, 25);
+        this.display3.setBounds(367, 237, 195, 394);
+        this.backBtn3.setBounds(476, 47, 100, 54);
+        this.clearButton.setBounds(362, 47, 100, 54);
+        this.slotNum.setBounds(12, 153, 156, 36);
+        this.numText.setBounds(183, 153, 156, 36);
+        this.inventoryTest.setBounds(9, 237, 330, 394);
+        this.buy_Btn.setBounds(12, 194, 156, 36);
+    
+    
+        regularTestFrame.add(factoryLabel);
+        regularTestFrame.add(denom20B_Btn);
+        regularTestFrame.add(denom50B_Btn);
+        regularTestFrame.add(denom100B_Btn);
+        regularTestFrame.add(denom1C_Btn);
+        regularTestFrame.add(denom5C_Btn);
+        regularTestFrame.add(denom10C_Btn);
+        regularTestFrame.add(denom20C_Btn);
+        regularTestFrame.add(display1);
+        regularTestFrame.add(display2);
+        regularTestFrame.add(display3);
+        regularTestFrame.add(scroll);
+        regularTestFrame.add(clearButton);
+        regularTestFrame.add(backBtn3);
+        regularTestFrame.add(slotNum);
+        regularTestFrame.add(numText);
+        regularTestFrame.add(inventoryTest);
+        regularTestFrame.add(buy_Btn);
+    
+    
+        regularTestFrame.setResizable(false);
+        regularTestFrame.setLayout(null);
+        this.regularTestFrame.setVisible(false);
+        }
+        public void openRegularTestFrame(){
+          this.regularTestFrame.setVisible(true);
+        }
+        public void closeRegularTestFrame(){
+            this.regularTestFrame.dispose();
+        }
+        public void setMachineLabel(String text){
+            this.factoryLabel.setText(text);
+        }
+        public void setBackbtn3Listener(ActionListener actionListener){
+            this.backBtn3.addActionListener(actionListener);
+        }
+        public void setClearBtn(ActionListener actionListener){
+            this.clearButton.addActionListener(actionListener);
+        }
+        public void clearDisplay(){
+            this.display1.setText("Amount Inserted: ");
+            this.display2.setText("Amount Needed: ");
+            this.display3.setText("");
+            this.numText.setText("");
+        }
+        public void setDenom1CBtn(ActionListener actionListener){
+            this.denom1C_Btn.addActionListener(actionListener);
+        }
+        public void setDenom5CBtn(ActionListener actionListener){
+            this.denom5C_Btn.addActionListener(actionListener);
+        }
+        public void setDenom10CBtn(ActionListener actionListener){
+            this.denom10C_Btn.addActionListener(actionListener);
+        }
+        public void setDenom20CBtn(ActionListener actionListener){
+            this.denom20C_Btn.addActionListener(actionListener);
+        }
+        public void setDenom20BBtn(ActionListener actionListener){
+            this.denom20B_Btn.addActionListener(actionListener);
+        }
+        public void setDenom50BBtn(ActionListener actionListener){
+            this.denom50B_Btn.addActionListener(actionListener);
+        }
+        public void setDenom100BBtn(ActionListener actionListener){
+            this.denom100B_Btn.addActionListener(actionListener);
+        }
+        public void setSlotNum(ActionListener actionListener){
+            this.slotNum.addActionListener(actionListener);
+        }
+        public void setBuyBtn(ActionListener actionListener){
+            this.buy_Btn.addActionListener(actionListener);
+        }
+        public void setTextDisplay1(int total){
+            this.display1.setText("Amount Inserted: " + total);
+        }
+        public void setTextDisplay2(int amount){
+            this.display2.setText("Amount Needed: " + amount);
+        }
+        public void addToTextDisplay3(String text){
+            this.display3.append(text + "\n");
+        }
+        public void setInventoryTest(String text){
+            this.inventoryTest.setText(text);
+        }
+        public String getSlotNum1(){
+            return this.numText.getText();
+        }
 }
+    
