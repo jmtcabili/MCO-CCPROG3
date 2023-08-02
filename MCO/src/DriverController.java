@@ -112,7 +112,6 @@ public class DriverController {
         });
 
 
-
         //controls for optinons
         this.driverView.setBackBtnListener(new ActionListener(){
             @Override
@@ -121,7 +120,14 @@ public class DriverController {
                 driverView.closeOptionsFrame();    
             }
         });
-
+        this.driverView.setTestFeaturesBtnListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                driverView.openRegularTestFrame();
+                driverView.setMachineLabel(driverModel.getLatestMachine().getName());
+                driverView.closeOptionsFrame();
+            }
+        });
         this.driverView.setMaintenanceBtnListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -243,7 +249,6 @@ public class DriverController {
 
             }
         });
-
         this.driverView.setBackTransactionBtnListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){

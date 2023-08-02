@@ -57,7 +57,6 @@ public class DriverView {
     private JTextField itemNameTf, numItemTf, stockPriceTf, 
                        slotNumberTf, newPriceTf; 
     private JTextArea totalDenomination, collectedMoney, inventoryM;
-    public Object setTestFeaturesBtnListener; 
 
     //Transaction Frame components
     private JFrame transactionFrame; 
@@ -74,8 +73,9 @@ public class DriverView {
                     item5_Btn, item6_Btn, item7_Btn, item8_Btn, item9_Btn,
                     item10_Btn, item11_Btn, denom20B_Btn, denom50B_Btn,
                     denom100B_Btn, denom1C_Btn, denom5C_Btn, denom10C_Btn,
-                    denom20C_Btn;
-    private JTextArea display1, display2, display3; 
+                    denom20C_Btn, backBtn3, clearButton;
+
+    private JTextArea display1, display2; 
 
     public DriverView(){
         MainView(); 
@@ -83,6 +83,7 @@ public class DriverView {
         regularMaintenceFrame();
         itemsInitializationView();
         transactionFrame();
+        regularVendingFrame();
     }
 
     //Main View
@@ -96,7 +97,7 @@ public class DriverView {
         this.factoryLabel = new JLabel("Venching Machine Factory");
         this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
         this.nameLbl = new JLabel("Enter vending machine name: ");
-        this.slotCountLbl = new JLabel("Enter number of slots (12): ");
+        this.slotCountLbl = new JLabel("Enter number of slots (8-12): ");
         this.itemCountLbl = new JLabel("Enter max item count per slot: ");
         this.feedbackLbl = new JLabel("");
 
@@ -601,12 +602,12 @@ public class DriverView {
     this.regularTestFrame  = new JFrame("Vending Machine Factory - Regular Vending");
     this.regularTestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.regularTestFrame.setSize(600, 800);
+    this.regularTestFrame.setLocationRelativeTo(null);
 
-    this.factoryLabel = new JLabel("<Venching Machine Factory>");
-    this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 15));
+    this.factoryLabel = new JLabel("");
+    this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
+    
 
-
-    this.createVM_Btn = new JButton("<Vending Machine Name>");
     this.item_Btn = new JButton("Item");
     this.item1_Btn = new JButton("Item");
     this.item2_Btn = new JButton("Item");
@@ -626,12 +627,17 @@ public class DriverView {
     this.denom5C_Btn = new JButton("5");
     this.denom10C_Btn = new JButton("10");
     this.denom20C_Btn = new JButton("20");
+    this.clearButton = new JButton("Clear");
+    this.backBtn3 = new JButton("Back");
 
     this.display1 = new JTextArea();
     this.display2 = new JTextArea();
-    this.display3 = new JTextArea();
+    this.display1.setEditable(false);
+    this.display2.setEditable(false);
 
-    this.createVM_Btn.setBounds(19, 47, 200, 19);
+    ///should be label for vending machine name 
+    //this.createVM_Btn.setBounds(19, 47, 200, 19);
+    this.factoryLabel.setBounds(19, 55, 200, 30);
     this.item_Btn.setBounds(19, 139, 93, 62);
     this.item1_Btn.setBounds(131, 139, 93, 62);
     this.item2_Btn.setBounds(241, 139, 93, 62);
@@ -644,52 +650,44 @@ public class DriverView {
     this.item9_Btn.setBounds(19, 397, 93, 62);
     this.item10_Btn.setBounds(131, 397, 93, 62);
     this.item11_Btn.setBounds(241, 397, 93, 62);
-    this.denom20B_Btn.setBounds(30, 663, 150, 50);
-    this.denom50B_Btn.setBounds(209, 665, 150, 50);
-    this.denom100B_Btn.setBounds(399, 665, 150, 50);
-    this.denom1C_Btn.setBounds(33, 504, 48, 38);
-    this.denom5C_Btn.setBounds(130, 504, 48, 38);
-    this.denom10C_Btn.setBounds(33, 580, 48, 38);
-    this.denom20C_Btn.setBounds(131, 580, 48, 38);
-    this.display1.setBounds(356, 18, 216, 74);
-    this.display2.setBounds(359, 117, 216, 342);
-    this.display3.setBounds(198, 504, 374, 121);
+    this.denom20B_Btn.setBounds(191, 508, 141, 57);
+    this.denom50B_Btn.setBounds(191, 569, 141, 57);
+    this.denom100B_Btn.setBounds(191, 634, 141, 57);
+    this.denom1C_Btn.setBounds(26, 537, 71, 55);
+    this.denom5C_Btn.setBounds(101, 537, 71, 55);
+    this.denom10C_Btn.setBounds(26, 598, 71, 55);
+    this.denom20C_Btn.setBounds(101, 598, 71, 55);
+    this.display1.setBounds(362, 133, 216, 74);
+    this.display2.setBounds(362, 225, 216, 406);
+    this.backBtn3.setBounds(476, 47, 100, 54);
+    this.clearButton.setBounds(362, 47, 100, 54);
 
 
     regularTestFrame.add(factoryLabel);
-    regularTestFrame.add(createVM_Btn);
-    regularTestFrame.add(item_Btn);
-    regularTestFrame.add(item1_Btn);
-    regularTestFrame.add(item2_Btn);
-    regularTestFrame.add(item3_Btn);
-    regularTestFrame.add(item4_Btn);
-    regularTestFrame.add(item5_Btn);
-    regularTestFrame.add(item6_Btn);
-    regularTestFrame.add(item7_Btn);
-    regularTestFrame.add(item8_Btn);
-    regularTestFrame.add(item9_Btn);
-    regularTestFrame.add(item10_Btn);
-    regularTestFrame.add(item11_Btn);
+    
     regularTestFrame.add(denom20B_Btn);
     regularTestFrame.add(denom50B_Btn);
     regularTestFrame.add(denom100B_Btn);
-    regularTestFrame.add(vendingMachineList);
     regularTestFrame.add(denom1C_Btn);
     regularTestFrame.add(denom5C_Btn);
     regularTestFrame.add(denom10C_Btn);
     regularTestFrame.add(denom20C_Btn);
     regularTestFrame.add(display1);
     regularTestFrame.add(display2);
-    regularTestFrame.add(display3);
+    regularTestFrame.add(clearButton);
+    regularTestFrame.add(backBtn3);
 
     regularTestFrame.setResizable(false);
     regularTestFrame.setLayout(null);
     this.regularTestFrame.setVisible(false);
     }
     public void openRegularTestFrame(){
-    this.regularTestFrame.setVisible(true);
+      this.regularTestFrame.setVisible(true);
     }
     public void closeRegularTestFrame(){
     this.regularTestFrame.dispose();
+    }
+    public void setMachineLabel(String text){
+        this.factoryLabel.setText(text);
     }
 }
