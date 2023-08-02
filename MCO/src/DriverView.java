@@ -96,7 +96,7 @@ public class DriverView {
         this.factoryLabel = new JLabel("Venching Machine Factory");
         this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
         this.nameLbl = new JLabel("Enter vending machine name: ");
-        this.slotCountLbl = new JLabel("Enter number of slots (8-12): ");
+        this.slotCountLbl = new JLabel("Enter number of slots (12): ");
         this.itemCountLbl = new JLabel("Enter max item count per slot: ");
         this.feedbackLbl = new JLabel("");
 
@@ -341,6 +341,9 @@ public class DriverView {
     }
     public void setAddItmBtlnListener(ActionListener actionListener){
         this.addItemBtn.addActionListener(actionListener);
+    }
+    public void setFeedbackItem(String text){
+        this.feedback.setText(text);
     }
     public boolean hasEmptyField(){
         boolean isEmpty = true; 
