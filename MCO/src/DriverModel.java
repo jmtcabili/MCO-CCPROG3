@@ -1,14 +1,30 @@
 import java.util.*;
 
+/**
+ * This class is responsible for handling the methods that are used to modify the view attributes
+ * @author Johan Marlo T. Cabili
+ * @author Joemar T. Lapasaran
+ * @version 1.0
+ */
 public class DriverModel {
     ArrayList<VMReg> machineList = new ArrayList<>();
     VMSpecial[] vmSpecial = new VMSpecial[1];
 
     private Money payment = new Money();
+    /** Blueprint of the DriverModel class
+     * 
+     */
 
     public DriverModel(){
         this.machineList = new ArrayList<VMReg>();
     }
+
+    /** Adds a machine to the machine list
+     * @param name the name of the vending machine
+     * @param slotcount the number of slots in a machine
+     * @param itemCount the lowest limit for item stock
+     * @param VMType a string represengin the type of vending machine
+     */
     public void addMachine(String name, String slotcount, String itemCount, String VMtype){
         
         if (VMtype.equals("Special")){
@@ -20,6 +36,9 @@ public class DriverModel {
             
         //add a condition to check if vmtype is special or regular
     }
+    /** Finds a machine name in the list
+     * @param name the name of the vending machine
+     */
     public boolean isFound(String name){//for the machine
         boolean isFound = false; 
         int i = 0; 
@@ -31,6 +50,9 @@ public class DriverModel {
         }
         return isFound; 
     }
+    /** Counts number of empty slots
+     * 
+     */
     public int countEmptySlot(){
         int countEmpty = 0; 
         for (int i = 0; i < getLatestMachine().getSlots().length; i++){
@@ -39,6 +61,9 @@ public class DriverModel {
         }
         return countEmpty; 
     }
+    /** Returns the index of an emptySlot
+     * 
+     */
     public int emptySlot(){
         boolean hasEmptySlot = false; 
         int emptySlot = -1;
@@ -53,6 +78,9 @@ public class DriverModel {
         return emptySlot; 
     }
 
+    /** Prints the machine list
+     * 
+     */
     public String printMachines(){
         String message = ""; 
 
@@ -63,10 +91,17 @@ public class DriverModel {
         return message; 
     }
     
+    /** Returns the last machine that was created
+     * @return latest machine
+     */
     public VMReg getLatestMachine(){
         return machineList.get(machineList.size()-1); 
     }
 
+    /** Finds item with same name as parameter
+     * @param itemName name of an item
+     * @return the item with the same name
+     */
     public Item itemFound(String itemName){
         boolean itemFound = false; 
         Item item = null; 
@@ -82,6 +117,10 @@ public class DriverModel {
         }
         return item; 
     }
+    /** Finds the slot index in the machine that contains a certain item
+     * @param item an item
+     * @return slot index (int)
+     */
     public int findSlotIdx(Item item){
         int slotIdx = -1; 
 
@@ -98,6 +137,9 @@ public class DriverModel {
         }
         return slotIdx; 
     }
+    /** Returns the denominations inside a machine
+     * @return string message of the denominations
+     */
     public String returnDenominations(){
         String message = "Denominations: \n";
         message += ("1-Peso Coin : " + getLatestMachine().getMoneyCompartment().getCoin1()+"\n");
@@ -110,6 +152,8 @@ public class DriverModel {
 
         return message; 
     }
+    /**Empties out the moneycompartment in the latest machine
+     */
     public void clearMoneyCompartment(){
         getLatestMachine().getMoneyCompartment().setCoin1(-getLatestMachine().getMoneyCompartment().getCoin1());
         getLatestMachine().getMoneyCompartment().setCoin5(-getLatestMachine().getMoneyCompartment().getCoin5());
@@ -119,6 +163,9 @@ public class DriverModel {
         getLatestMachine().getMoneyCompartment().setBill50(-getLatestMachine().getMoneyCompartment().getBill50());
         getLatestMachine().getMoneyCompartment().setBill100(-getLatestMachine().getMoneyCompartment().getBill100());
     }
+    /**Adds the denominations in @param payment to money compartment
+    * @param payment a money object reflecting the paymetn 
+    */
     public void addToMoney(Money payment){
         getLatestMachine().getMoneyCompartment().setCoin1(payment.getCoin1());
         getLatestMachine().getMoneyCompartment().setCoin5(payment.getCoin5());
@@ -128,9 +175,16 @@ public class DriverModel {
         getLatestMachine().getMoneyCompartment().setBill50(payment.getBill20());
         getLatestMachine().getMoneyCompartment().setBill100(payment.getBill100());
     }
+    /**Returns the payment Money 
+    * @return payment  
+    */
     public Money getPayment () {
         return this.payment;
     }
+
+    /**Clears the denominations in payment
+    *   
+    */
     public void clearPayment(){
         this.payment.setCoin1(-payment.getCoin1());
         this.payment.setCoin5(-payment.getCoin5());
@@ -140,6 +194,9 @@ public class DriverModel {
         this.payment.setBill50(-payment.getBill50());
         this.payment.setBill100(-payment.getBill100());
     }
+    /**Clears the denominations in payment
+    *  @return a string message on the transaction details
+    */
     public String returnTransactions(){
         String message = "";
 
@@ -165,9 +222,15 @@ public class DriverModel {
         }
         return message; 
     }
+    /**Returns latest instance of a special vending machine
+    *   @return VMSpecial instance
+    */
     public VMSpecial getVmSpecial(){
         return this.vmSpecial[0];
     }
+    /**Returns a string message of the order bag of the user 
+    *   @return Order bag contents (string)
+    */
     public String displayOrderBag(){
         String message = "Order Bag: \n";
 

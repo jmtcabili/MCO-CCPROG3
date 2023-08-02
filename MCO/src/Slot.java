@@ -17,6 +17,10 @@ public class Slot {
         this.item = item;
         this.itemList = new ArrayList<Item>(); 
     }
+    /** Blueprint of the class slot
+     * @param item is the item to be inserted in the slot
+     * @param quantity the number of items
+     */
     public Slot (Item item, int quantity) {
         this.item = item;
         this.itemList = new ArrayList<Item>(); 
@@ -35,10 +39,16 @@ public class Slot {
         }
         System.out.println(itemList.size());
     }
+    /** Gathers the number of items inside the itemlist
+     * @return the number of items inside the itemList
+     */
     public int getNumItem () {
         return itemList.size();
     }
 
+    /** Disposes of an item and removes it from the list
+     * 
+     */
     public void sellItem(){
         int lastIndex = this.itemList.size()-1;
         this.itemList.remove(lastIndex);

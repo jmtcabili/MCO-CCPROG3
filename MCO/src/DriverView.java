@@ -22,6 +22,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Flow;
 
+/**
+ * This class handles all the GUI elements to be displayed
+ * @author Johan Marlo T. Cabili
+ * @author Joemar T. Lapasaran
+ * @version 1.0
+ */
 public class DriverView {
 
     //Main frame components
@@ -84,6 +90,9 @@ public class DriverView {
 
     private JTextField numText; 
 
+     /** Blueprint of the VMReg class. Initializes all the views
+     * 
+     */
     public DriverView(){
         MainView(); 
         OptionsVMView();
@@ -94,6 +103,9 @@ public class DriverView {
     }
 
     //Main View
+     /** Initializes elements for main view
+     * 
+     */
     public void MainView(){
         this.mainFrame = new JFrame("Vending Machine Factory");
 
@@ -101,7 +113,7 @@ public class DriverView {
 		this.mainFrame.setSize(600, 800);
         this.mainFrame.setLocationRelativeTo(null);
         
-        this.factoryLabel = new JLabel("Venching Machine Factory");
+        this.factoryLabel = new JLabel("Vending Machine Factory");
         this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
         this.nameLbl = new JLabel("Enter vending machine name: ");
         this.slotCountLbl = new JLabel("Enter number of slots (8-12): ");
@@ -228,6 +240,9 @@ public class DriverView {
     }
 
     //options view
+     /** Initializes elements for option view
+     * 
+     */
     public void OptionsVMView(){
         this.optionsFrame = new JFrame("Vending Machine Factory");
 
@@ -279,6 +294,9 @@ public class DriverView {
     }
 
     //Items Initialiation view
+     /** Initializes elements for the items initialization view
+     * 
+     */
     public void itemsInitializationView(){
         this.itemInitializationFrame = new JFrame("Vending Machine Factory - Item Initialization");
         this.itemInitializationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -420,6 +438,9 @@ public class DriverView {
     }
 
     //regular maintenance view
+     /** Initializes elements for the maintenance view
+     * 
+     */
     public void regularMaintenceFrame(){
         this.regularMaintenanceFrame = new JFrame("Vending Machine Factory - Maintenance"); 
         this.regularMaintenanceFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -529,6 +550,7 @@ public class DriverView {
     }
 
     //maintenance listeners
+    
     public void openMaintenanceFrame(){
         this.regularMaintenanceFrame.setVisible(true);
     }
@@ -606,6 +628,9 @@ public class DriverView {
         this.transactionBtn.addActionListener(actionListener);
     }
     
+     /** Initializes elements for transaction view
+     * 
+     */
     public void transactionFrame(){
         this.transactionFrame = new JFrame("Vending Machine Factory - Transaction History");
         this.transactionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -652,6 +677,9 @@ public class DriverView {
         this.history.setText(text);
     }
     
+     /** Initializes elements for vending view
+     * 
+     */
     public void regularVendingFrame(){
         this.regularTestFrame  = new JFrame("Vending Machine Factory - Regular Vending");
         this.regularTestFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
