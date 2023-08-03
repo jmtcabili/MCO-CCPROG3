@@ -1,4 +1,4 @@
-package MCO;
+
 
 import java.util.*; 
 /**
@@ -11,7 +11,7 @@ import java.util.*;
 public class VMReg {
     protected String name; 
     protected Slot[] slots;
-    private int slotItemLimit; 
+    protected int slotItemLimit; 
     private boolean isInitialized = false; 
     protected Money moneyCompartment;
     protected int numTransactions;

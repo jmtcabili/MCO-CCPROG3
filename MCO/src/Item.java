@@ -1,4 +1,4 @@
-package MCO;
+
 
 /**
  * This class contains the getters and setters of the item

@@ -1,4 +1,4 @@
-package MCO;
+
 import java.util.*;
 
 /**
@@ -236,9 +236,30 @@ public class DriverModel {
         String message = "Order Bag: \n";
 
         for (int i = 0; i < vmSpecial[0].getOrderBag().size(); i++){
+            System.out.println(i + "). " + vmSpecial[0].getOrderBag().get(i).getName());
             message += ((i+1)+ ".) " + vmSpecial[0].getOrderBag().get(i).getName()+"\n");
         }
         message += "\n";
         return message; 
     }
+
+    public void bagToSlot(){
+        boolean foundItem; 
+        //loop through bag 
+        //find item in bag in designated slot, stock item
+        int size = getVmSpecial().getOrderBag().size();
+        for (int i = 0; i < size; i++){
+            foundItem = false; 
+            int j = 0;
+            while (j < getLatestMachine().slots.length && foundItem == false){
+                if (getVmSpecial().getOrderBag().get(i).getName().equals(getLatestMachine().getSlots()[j].getItem().getName())){
+                    foundItem = true; 
+                    getLatestMachine().getSlots()[j].stockItem(getVmSpecial().getOrderBag().get(i), 1);
+                }
+                j++;
+            }
+        }
+
+    }
 }
+

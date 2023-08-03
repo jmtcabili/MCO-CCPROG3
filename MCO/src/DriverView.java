@@ -1,4 +1,4 @@
-package MCO;
+
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -651,9 +651,9 @@ public class DriverView {
 
         this.history.setEditable(false);
 
-        transactionhistory.setBounds(79, 83, 161, 15);
+        transactionhistory.setBounds(48, 64, 223, 54);
         backTransactionBtn.setBounds(389, 64, 154, 54);
-        scroll.setBounds(48, 161, 300, 300);
+        scroll.setBounds(48, 161, 495, 562);
         
 
 
@@ -690,7 +690,7 @@ public class DriverView {
         this.factoryLabel.setFont(new Font("Calibri", Font.PLAIN, 30));
         
     
-        this.slotNum = new JButton("Slot Number: ");
+        this.slotNum = new JButton("Confirm slot number: ");
         this.buy_Btn = new JButton("Buy");
         this.numText = new JTextField("");
         this.inventoryTest = new JTextArea("Inventory:");
@@ -795,6 +795,9 @@ public class DriverView {
             this.display2.setText("Amount Needed: ");
             this.display3.setText("");
             this.numText.setText("");
+        }
+        public void setNumText(String text){
+            this.numText.setText(text);
         }
         public void setDenom1CBtn(ActionListener actionListener){
             this.denom1C_Btn.addActionListener(actionListener);
