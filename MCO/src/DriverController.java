@@ -509,15 +509,15 @@ public class DriverController {
                                         int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
                                         Item itemToSell = driverModel.getVmSpecial().getOrderBag().get(k);
                                         System.out.println(k);
-                                        driverModel.getVmSpecial().getTransactions().get(numTransactions-1).getItemsSold().add(itemToSell);
+                                        driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToSell);
                                         driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
                                     }
                                     System.out.println("hi");
                                     driverView.addToTextDisplay3("Preparing custom item...\n");
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice());
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat());
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies());
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice()); driverModel.delay();
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat()); driverModel.delay();
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies()); driverModel.delay();
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());driverModel.delay();
                                     driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
                                     driverModel.getVmSpecial().getOrderBag().clear();
                                     customItemMade = true; 

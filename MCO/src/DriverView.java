@@ -639,10 +639,10 @@ public class DriverView {
         this.transactionFrame.setLocationRelativeTo(null);
 
         this.transactionhistory = new JLabel("Transaction History");
-        
+
         this.backTransactionBtn = new JButton("Back");
 
-        this.history = new JTextArea("");
+        this.history = new JTextArea();
 
 
         JScrollPane scroll = new JScrollPane(history);
@@ -651,19 +651,22 @@ public class DriverView {
 
         this.history.setEditable(false);
 
+        JPanel panel = new JPanel();
+        panel.setLayout(null); 
+
         transactionhistory.setBounds(48, 64, 223, 54);
         backTransactionBtn.setBounds(389, 64, 154, 54);
         scroll.setBounds(48, 161, 495, 562);
-        
+
+        panel.add(transactionhistory);
+        panel.add(backTransactionBtn);
+        panel.add(scroll);
 
 
-        transactionFrame.add(transactionhistory);
-        transactionFrame.add(backTransactionBtn);
-        transactionFrame.add(scroll);
-        
+        transactionFrame.setContentPane(panel);
 
         transactionFrame.setVisible(false);
-    } 
+    }
     public void openTransactionFrame(){
         transactionFrame.setVisible(true);
     }
