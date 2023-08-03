@@ -36,7 +36,7 @@ public class VMSpecial extends VMReg {
 
         for (int k = 0; k < size; k++) {
             if (orderBag.get(k) instanceof Meat) {
-                message += ("Searing " + orderBag.get(k).getName() + "...");
+                message += ("Searing " + orderBag.get(k).getName() + "...\n");
             }
         }
         return message; 
@@ -47,7 +47,7 @@ public class VMSpecial extends VMReg {
 
         for (int k = 0; k < size; k++) {
             if (orderBag.get(k) instanceof Rice) {
-                message += ("Boiling " + orderBag.get(k).getName() + "...");
+                message += ("Boiling " + orderBag.get(k).getName() + "...\n");
             }
         }
         return message; 
@@ -58,7 +58,7 @@ public class VMSpecial extends VMReg {
         int size = this.getOrderBag().size();
         for (int k = 0; k < size; k++) {
             if (orderBag.get(k) instanceof Veggie) {
-                message += ("Frying " + orderBag.get(k).getName() + "...");
+                message += ("Frying " + orderBag.get(k).getName() + "...\n");
             }
         }
         return message; 
@@ -70,7 +70,7 @@ public class VMSpecial extends VMReg {
         int size = this.getOrderBag().size();
         for (int k = 0; k < size; k++) {
             if (orderBag.get(k) instanceof Extra) {
-                message += ("Topping with " + orderBag.get(k).getName() + "...");
+                message += ("Topping with " + orderBag.get(k).getName() + "...\n");
             }
         }
         return message; 

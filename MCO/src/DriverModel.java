@@ -203,11 +203,12 @@ public class DriverModel {
 
         for (int j = 0; j < getLatestMachine().getTransactions().size(); j++){
             //starting inventory
-            message += "STARTING INVENTORY - " + (j+1) + "\n";
+            message += "TRANSACTION #" + (j+1);
+            message += "STARTING INVENTORY: \n";
             Slot[] tempStart = getLatestMachine().getTransactions().get(j).getStartingInventory();
             int k = 0; 
             while (k < getLatestMachine().getTransactions().get(j).getStartingInventory().length &&  getLatestMachine().getTransactions().get(j).getStartingInventory()[k] != null){
-                message += ((k+1) + ".) " + tempStart[k].getItem().getName() + " - " + tempStart[k].getItem().getPrice() + "Php - " + tempStart[k].getItem().getCalories() + " cal - " + tempStart[k].getNumItem()+" pcs \n");
+                message += ((k+1) + ".) " + tempStart[k].getItem().getName() + " - " + tempStart[k].getItem().getPrice() + "Php - " + tempStart[k].getItem().getCalories() + " cal - " + tempStart[k].getNumItem()+" pcs - " + tempStart[k].getItem().getClass().getName());
                 k++;
             }
             //current inventory

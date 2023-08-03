@@ -514,12 +514,13 @@ public class DriverController {
                                     }
                                     System.out.println("hi");
                                     driverView.addToTextDisplay3("Preparing custom item...\n");
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice()); driverModel.delay();
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat()); driverModel.delay();
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies()); driverModel.delay();
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());driverModel.delay();
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice()); 
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat()); 
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies()); 
+                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());
                                     driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
                                     driverModel.getVmSpecial().getOrderBag().clear();
+                                    driverView.clearDisplay();
                                     customItemMade = true; 
                                 }else
                                     driverView.addToTextDisplay3("Not enough change");
@@ -530,11 +531,12 @@ public class DriverController {
                         driverView.addToTextDisplay3("Insufficient ingredients");
                 } else 
                     driverView.addToTextDisplay3("Order bag is empty");
-                if (customItemMade == false){
-                    driverModel.getVmSpecial().getOrderBag().clear();
-                    driverModel.bagToSlot(); 
-                    driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
-                }
+
+
+                driverModel.getVmSpecial().getOrderBag().clear();
+                driverModel.bagToSlot(); 
+                driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+
             }
         });
 

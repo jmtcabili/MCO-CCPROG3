@@ -41,7 +41,7 @@ public class VMReg {
 
     public String returnInventory(){
         int i = 0; 
-        String message = "INVENTORY: \n";
+        String message = "CURRENT INVENTORY: \n";
         while (i < this.slots.length && slots[i] != null){
             message += (i+1 + ".) " + slots[i].getItem().getName() + " - " + slots[i].getItem().getPrice() + "Php - " + slots[i].getItem().getCalories() + " cal - " + slots[i].getNumItem()+ " pcs - " + slots[i].getItem().getClass().getName() + "\n");
             i++;

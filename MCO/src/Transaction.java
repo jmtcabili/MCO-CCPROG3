@@ -37,30 +37,6 @@ public class Transaction {
         this.transactionList.add(itemSold);
     }
 
-    /** Prints the transaction details
-     * @param numTransactions number of transactions
-     */
-    public void printDetails(int numTransactions){
-        int i = 0, j = 0; 
-
-        System.out.println("\nTransaction History #" + transactionList.size());
-        //printing items sold
-        System.out.println("ITEMS SOLD");
-        for (int k = 0; k < transactionList.size(); k++){
-            System.out.println((k+1) + ".) " + transactionList.get(k).getName());
-        }
-        System.out.println("MONEY COLLECTED");
-        System.out.println("Obtained " + this.collectedMoney + " pesos!");
-        System.out.println("");
-        System.out.println("ENDING INVENTORY");
-        /*while (j < endingInventory.size() && endingInventory.get(j) != null){
-            System.out.print((j+1) + ".) " + endingInventory.get(j).getItem().getName());
-            System.out.println(" : " + endingInventory.get(j).getNumItem() + " pcs.");
-            j++;
-        }*/
-        System.out.println("");
-
-    }
 
     /** Gets the items sold
      * returns the transaction list 
