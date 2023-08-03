@@ -1,5 +1,6 @@
 
 
+
 import javax.swing.JButton;
 
 import java.awt.event.ActionEvent;
@@ -47,23 +48,31 @@ public class DriverController {
                 
                 try {
                     if (!driverView.getName().equals("") && !numSlots.equals("") &&
-                    !itemCount.equals("") && !typeVM.equals("")){
-                    if(!driverModel.isFound(name)&&
-                        (Integer.parseInt(numSlots) >= 2 && Integer.parseInt(numSlots) <= 12) &&
-                        Integer.parseInt(itemCount) >= 10){
-                        driverModel.addMachine(name, numSlots, itemCount, typeVM);
-                        driverView.setMachineList(driverModel.printMachines());
-                        driverView.setFeedbackText("Successful add");
+                        !itemCount.equals("") && !typeVM.equals("")){
+                        if(!driverModel.isFound(name)){
+                            if (Integer.parseInt(numSlots) >= 4 && Integer.parseInt(numSlots) <= 12 &&
+                                Integer.parseInt(itemCount) >= 10){
+                                driverModel.addMachine(name, numSlots, itemCount, typeVM);
+                                driverView.setMachineList(driverModel.printMachines());
+                                driverView.setFeedbackText("Successful add");
+                            } else{
+                                driverView.setFeedbackText("Adjust slots/item limit");
+                            }
+                        }else{
+                            driverView.setFeedbackText("Duplicate found.");
+                        }
+                    } else {
+                        driverView.setFeedbackText("Unsuccessful add");
                     }
-                } else 
-                    driverView.setFeedbackText("Unsuccessful add");
-                driverView.clearTextFields();
+    
+                    driverView.clearTextFields();
                 } catch (Exception a) {
                     // TODO: handle exception
                     driverView.setFeedbackText("Invalid input");
                 }
-                
             }
+                
+
         });
     
         this.driverView.setTestVM_BtnListener(new ActionListener(){
@@ -432,27 +441,33 @@ public class DriverController {
                     Item itemToBuy = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem();
                     int stock = driverModel.getLatestMachine().getSlots()[slotInput-1].getNumItem();
 
-                    if (stock > 0){
-                        if (driverModel.getPayment().getTotalMoney() >= price){
+                    if (!(itemToBuy instanceof Extra)){
+                        if (stock > 0){
+                            if (driverModel.getPayment().getTotalMoney() >= price){
 
-                            driverModel.addToMoney(tempPayment);
-                            int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
-                            if (driverModel.getLatestMachine().produceChange(change, price)){
-                                driverView.addToTextDisplay3("Change is: " + change);
-                                driverModel.clearPayment();
-                                //add item to itemsSold to certain transaction
-                                int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
-                                driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToBuy);
-                                driverModel.getLatestMachine().getSlots()[slotInput-1].sellItem();
-                                driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
-                                driverView.addToTextDisplay3("Dispened: " + itemToBuy.getName());
-                            }else
-                                driverView.addToTextDisplay3("Not enough change");
+                                driverModel.addToMoney(tempPayment);
+                                int change = (driverModel.getPayment().getTotalMoney()) - (driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
+                                if (driverModel.getLatestMachine().produceChange(change, price)){
+                                    driverView.addToTextDisplay3("Change is: " + change);
+                                    driverModel.clearPayment();
+                                    //add item to itemsSold to certain transaction
+                                    int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
+                                    driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToBuy);
+                                    driverModel.getLatestMachine().getSlots()[slotInput-1].sellItem();
+                                    driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                    driverView.addToTextDisplay3("Dispensed: " + itemToBuy.getName());
+                                }else
+                                    driverView.addToTextDisplay3("Not enough change");
 
-                        } else
-                            driverView.addToTextDisplay3("Insufficient payment");
-                    }else
-                        driverView.addToTextDisplay3("No stock");
+                            } else
+                                driverView.addToTextDisplay3("Insufficient payment");
+                        }else
+                            driverView.addToTextDisplay3("No stock");
+                    }else{
+                        driverView.addToTextDisplay3("Can not sell addon items");
+                        driverView.setDisplay1("Amount Inserted: ");
+                        driverView.setDisplay2("Amount Needed: ");
+                    }
                     
                 }else
                     driverView.addToTextDisplay3("Enter valid slot");

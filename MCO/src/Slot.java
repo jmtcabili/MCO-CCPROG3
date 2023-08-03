@@ -1,4 +1,5 @@
 
+
 import java.util.*;
 /**
  * This class contains the getters and setters of slot

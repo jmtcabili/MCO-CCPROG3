@@ -1,4 +1,5 @@
 
+
 /**
  * This class contains the main method of the program 
  * @author Johan Marlo T. Cabili
@@ -7,6 +8,9 @@
  */
 public class Driver {
 
+    /** Runs the main method of the program and generates GUI
+     * 
+     */
     public static void main(String[] args){
         DriverView driverView = new DriverView();
         DriverModel driverModel = new DriverModel();

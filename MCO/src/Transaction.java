@@ -39,7 +39,7 @@ public class Transaction {
 
 
     /** Gets the items sold
-     * returns the transaction list 
+     * @return the transaction list 
      */
     public ArrayList<Item> getItemsSold() {
         return transactionList;
@@ -60,8 +60,9 @@ public class Transaction {
     }
 
 
-    /** Gets the ending inventory
-     * 
+    
+    /** Sets the collected money
+     * @param collectedMoney from the user
      */
     public void setCollectedMoney(int collectedMoney) {
         this.collectedMoney += collectedMoney;

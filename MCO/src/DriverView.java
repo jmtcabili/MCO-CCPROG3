@@ -176,22 +176,6 @@ public class DriverView {
         mainFrame.setResizable(false);
         mainFrame.setLayout(null);
 
-        /*JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panel.add(this.factoryLabel);
-       
-        panel.setPreferredSize(new Dimension(501, 121));
-        this.mainFrame.add(panel);
-
-        panel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
-        panel.add(this.createVM_Btn);
-        panel.add(this.nameLbl);
-        panel.add(this.nameTf);
-        this.mainFrame.add(panel);
-
-        this.mainFrame.add(createVM_Btn);
-        this.mainFrame.add(testVM_Btn);
-        this.mainFrame.add(exit_Btn);
-        */
         this.mainFrame.setVisible(true);
     }
 

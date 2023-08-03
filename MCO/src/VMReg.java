@@ -1,5 +1,6 @@
 
 
+
 import java.util.*; 
 /**
  * This class is responsible for most of the main functions of the vending machine.
@@ -35,10 +36,18 @@ public class VMReg {
     }
 
     //new functions
+
+    /** Sets the slot number
+     * @param slotIdx takes in the value of slot
+     * @param slot value to be set in slots
+     */
     public void setSlot(int slotIdx, Slot slot){
         this.slots[slotIdx] = slot; 
     }
 
+    /** Displays the inventory
+     * @return the inventory
+     */
     public String returnInventory(){
         int i = 0; 
         String message = "CURRENT INVENTORY: \n";
@@ -49,13 +58,19 @@ public class VMReg {
         return message; 
     }
 
+    /** Sets the initialized value
+     * @param bool is the initialized value
+     */
     public void setInitialized(boolean bool){
         this.isInitialized = bool; 
     }
 
-    /** Produces change to be given to the user
-     * @param change change needed
-     * @param price price of the product to be bought 
+    
+
+    /** Produces change 
+     * @param change is the change
+     * @param price price of an item
+     * @return if change is sufficient or not
      */
     public boolean produceChange(int change, int price){
         //total ob1 - price = change 
@@ -188,6 +203,9 @@ public class VMReg {
     public void setJustStocked(boolean justStocked) {
         this.justStocked = justStocked;
     }
+    /** Gathers the initialized value
+     * @return the initialized value
+     */
     public boolean getIsInitialized(){
         return this.isInitialized; 
     }

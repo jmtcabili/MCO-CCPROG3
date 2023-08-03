@@ -23,12 +23,18 @@ public class VMSpecial extends VMReg {
         super(name, slotCount, slotItemLimit);
     }   
     
+    /** Gets the order bag
+     * @return the order bag
+     */
     public ArrayList<Item> getOrderBag(){
         return this.orderBag; 
     }
 
     
     
+    /** Displays meal prepping
+     * @return the message that it is prepping
+     */
     public String prepareMeat(){
         String message = "";
 
@@ -41,6 +47,9 @@ public class VMSpecial extends VMReg {
         }
         return message; 
     }
+    /**  Displays rice prep
+     * @return the message that it is prepping
+     */
     public String prepareRice(){
         String message = "";
         int size = this.getOrderBag().size();
@@ -52,6 +61,9 @@ public class VMSpecial extends VMReg {
         }
         return message; 
     }
+    /** Displays veggie prep
+     * @return the message that it is prepping
+     */
     public String prepareVeggies(){
         String message = "";
 
@@ -63,6 +75,9 @@ public class VMSpecial extends VMReg {
         }
         return message; 
     }
+    /** Displays extras prep
+     * @return the message that it is prepping
+     */
     public String prepareExtras(){
         String message = "";
 
@@ -75,6 +90,9 @@ public class VMSpecial extends VMReg {
         }
         return message; 
     }
+    /** Computes for the total price of the order bag
+     * @return the total price of the order bag
+     */
     public int computeOrderBag(){
         int total = 0; 
         int size = this.orderBag.size(); 

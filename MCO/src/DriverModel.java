@@ -1,4 +1,5 @@
 
+
 import java.util.*;
 
 /**
@@ -37,8 +38,10 @@ public class DriverModel {
             
         //add a condition to check if vmtype is special or regular
     }
-    /** Finds a machine name in the list
-     * @param name the name of the vending machine
+    
+    /** Finds machine name in the list
+     * @param name of the machine
+     * @return if machine is found or not
      */
     public boolean isFound(String name){//for the machine
         boolean isFound = false; 
@@ -51,8 +54,9 @@ public class DriverModel {
         }
         return isFound; 
     }
-    /** Counts number of empty slots
-     * 
+    
+    /** Counts empty slots
+     * @return the empty slots
      */
     public int countEmptySlot(){
         int countEmpty = 0; 
@@ -62,8 +66,9 @@ public class DriverModel {
         }
         return countEmpty; 
     }
-    /** Returns the index of an emptySlot
-     * 
+    
+    /** Returns the empty slot
+     * @return empty slot
      */
     public int emptySlot(){
         boolean hasEmptySlot = false; 
@@ -79,8 +84,9 @@ public class DriverModel {
         return emptySlot; 
     }
 
-    /** Prints the machine list
-     * 
+    
+    /** Prints the machines
+     * @return the list of machines
      */
     public String printMachines(){
         String message = ""; 
@@ -242,6 +248,9 @@ public class DriverModel {
         return message; 
     }
 
+    /** Puts the items in the bag to the slot
+     * 
+     */
     public void bagToSlot(){
         boolean foundItem; 
         //loop through bag 
@@ -261,6 +270,9 @@ public class DriverModel {
 
     }
 
+    /** Delay timer
+     * 
+     */
     public void delay(){
         try{
             Thread.sleep(1000);
@@ -268,6 +280,9 @@ public class DriverModel {
             e.printStackTrace();
         }
     }
+    /** Gets the machine list
+     * @return machine list
+     */
     public ArrayList<VMReg> getMachineList(){
         return this.machineList;
     }
