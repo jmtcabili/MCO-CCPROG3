@@ -87,7 +87,6 @@ public class DriverModel {
 
         for (int i = 0; i < machineList.size(); i++){
             message+= ((i+1) + ".) " + machineList.get(i).getName()+ " - " + machineList.get(i).getClass().getName() + "\n");
-            System.out.println(message);
         }
         return message; 
     }
@@ -203,12 +202,12 @@ public class DriverModel {
 
         for (int j = 0; j < getLatestMachine().getTransactions().size(); j++){
             //starting inventory
-            message += "TRANSACTION #" + (j+1);
+            message += "TRANSACTION #" + (j+1) +"\n";
             message += "STARTING INVENTORY: \n";
             Slot[] tempStart = getLatestMachine().getTransactions().get(j).getStartingInventory();
             int k = 0; 
             while (k < getLatestMachine().getTransactions().get(j).getStartingInventory().length &&  getLatestMachine().getTransactions().get(j).getStartingInventory()[k] != null){
-                message += ((k+1) + ".) " + tempStart[k].getItem().getName() + " - " + tempStart[k].getItem().getPrice() + "Php - " + tempStart[k].getItem().getCalories() + " cal - " + tempStart[k].getNumItem()+" pcs - " + tempStart[k].getItem().getClass().getName());
+                message += ((k+1) + ".) " + tempStart[k].getItem().getName() + " - " + tempStart[k].getItem().getPrice() + "Php - " + tempStart[k].getItem().getCalories() + " cal - " + tempStart[k].getNumItem()+" pcs - " + tempStart[k].getItem().getClass().getName() +"\n");
                 k++;
             }
             //current inventory
@@ -237,7 +236,6 @@ public class DriverModel {
         String message = "Order Bag: \n";
 
         for (int i = 0; i < vmSpecial[0].getOrderBag().size(); i++){
-            System.out.println(i + "). " + vmSpecial[0].getOrderBag().get(i).getName());
             message += ((i+1)+ ".) " + vmSpecial[0].getOrderBag().get(i).getName()+"\n");
         }
         message += "\n";
@@ -269,6 +267,9 @@ public class DriverModel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<VMReg> getMachineList(){
+        return this.machineList;
     }
 }
 

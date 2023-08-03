@@ -37,7 +37,6 @@ public class Slot {
         for (int i = 1; i <= quantity; i++){
             itemList.add(item);
         }
-        System.out.println(itemList.size());
     }
     /** Gathers the number of items inside the itemlist
      * @return the number of items inside the itemList

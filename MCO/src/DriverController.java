@@ -45,7 +45,8 @@ public class DriverController {
                 String itemCount = driverView.getItemCount();
                 String typeVM = driverView.getTypeVM();
                 
-                if (!driverView.getName().equals("") && !numSlots.equals("") &&
+                try {
+                    if (!driverView.getName().equals("") && !numSlots.equals("") &&
                     !itemCount.equals("") && !typeVM.equals("")){
                     if(!driverModel.isFound(name)&&
                         (Integer.parseInt(numSlots) >= 2 && Integer.parseInt(numSlots) <= 12) &&
@@ -57,20 +58,28 @@ public class DriverController {
                 } else 
                     driverView.setFeedbackText("Unsuccessful add");
                 driverView.clearTextFields();
+                } catch (Exception a) {
+                    // TODO: handle exception
+                    driverView.setFeedbackText("Invalid input");
+                }
+                
             }
         });
     
         this.driverView.setTestVM_BtnListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (driverModel.getLatestMachine().getIsInitialized() == false){
-                    driverView.setInventoryText("Inventory: \n");
-                    driverView.openInitializeItems();
-                    driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
-                }else{
-                    driverView.openOptionsFrame();
-                }
-                driverView.setVMLblText(driverModel.getLatestMachine().getName() + "'s Machine");
-                driverView.closeMainFrame();
+                if (driverModel.getMachineList().size() != 0){
+                    if (driverModel.getLatestMachine().getIsInitialized() == false){
+                        driverView.setInventoryText("Inventory: \n");
+                        driverView.openInitializeItems();
+                        driverView.setSlotsLeft("Slots: " + driverModel.countEmptySlot());
+                    }else{
+                        driverView.openOptionsFrame();
+                    }
+                    driverView.setVMLblText(driverModel.getLatestMachine().getName() + "'s Machine");
+                    driverView.closeMainFrame();
+                } else
+                    driverView.setFeedbackText("No machine detected");
             }
         });
         this.driverView.setExit_BtnListener(new ActionListener(){
@@ -153,6 +162,7 @@ public class DriverController {
             @Override
             public void actionPerformed(ActionEvent e){
                 driverView.openMainFrame();
+                driverView.setFeedbackText("");
                 driverView.closeOptionsFrame();    
             }
         });
@@ -190,10 +200,12 @@ public class DriverController {
             public void actionPerformed(ActionEvent e){
                 String itemName = driverView.getItemName();
                 int numRestock = Integer.parseInt(driverView.getNumRestock());
+                int max = driverModel.getLatestMachine().getSlotItemLimit();
                 if (driverModel.itemFound(itemName) != null){
                     Item temp = driverModel.itemFound(itemName);
-                    if(driverModel.findSlotIdx(temp) != -1){
-                        int slotIdx = driverModel.findSlotIdx(temp);
+                    int slotIdx = driverModel.findSlotIdx(temp);
+                    int sum = numRestock + driverModel.getLatestMachine().getSlots()[slotIdx].getNumItem(); 
+                    if(driverModel.findSlotIdx(temp) != -1 && sum <= max){
                         driverModel.getLatestMachine().getSlots()[slotIdx].stockItem(temp, numRestock);
                         Transaction transaction = new Transaction(driverModel.getLatestMachine().getSlots());
                         driverModel.getLatestMachine().getTransactions().add(transaction);
@@ -391,23 +403,29 @@ public class DriverController {
             @Override
             public void actionPerformed(ActionEvent e){
                 //TODO: ERROR HANDLING IF SLOT NUM INPUTTED IS OUT OF BOUNDS
-                int slotInput = Integer.parseInt(driverView.getSlotNum1());
-                if (slotInput > 0 && slotInput <= driverModel.getLatestMachine().getSlots().length){
+                
+                try {
+                    int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                    if (slotInput > 0 && slotInput <= driverModel.getLatestMachine().getSlots().length){
                     driverView.addToTextDisplay3("Picked: " + driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getName());
                     driverView.setTextDisplay2(driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice());
                     driverView.setTextDisplay1(driverModel.getPayment().getTotalMoney());
                 }
                 if (driverModel.getLatestMachine() instanceof VMSpecial)
                     driverModel.getVmSpecial().getOrderBag().clear();
+                } catch (Exception a) {
+                    driverView.addToTextDisplay3("Slot number is empty.\nPlease input a valid slot #");
+                }
+
             }
         });
 
         this.driverView.setBuyBtn(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                //TODO: ERROR HANDLING IF CHANGE < 0
-                int slotInput = Integer.parseInt(driverView.getSlotNum1());
-                Money tempPayment = driverModel.getPayment(); 
+                try {
+                    int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                    Money tempPayment = driverModel.getPayment(); 
                 
                 if (slotInput-1 >= 0 && slotInput-1 < driverModel.getLatestMachine().getSlots().length){
                     int price = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem().getPrice();
@@ -427,6 +445,7 @@ public class DriverController {
                                 driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToBuy);
                                 driverModel.getLatestMachine().getSlots()[slotInput-1].sellItem();
                                 driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                driverView.addToTextDisplay3("Dispened: " + itemToBuy.getName());
                             }else
                                 driverView.addToTextDisplay3("Not enough change");
 
@@ -438,6 +457,11 @@ public class DriverController {
                 }else
                     driverView.addToTextDisplay3("Enter valid slot");
 
+                } catch (NumberFormatException a) {
+                    // TODO: handle exception
+                    driverView.addToTextDisplay3("Please confirm a slot number first\n");
+                }
+                
             }
         });
 
@@ -445,7 +469,8 @@ public class DriverController {
             @Override
             public void actionPerformed(ActionEvent e){
                 //clear should also clear bag
-                int slotInput = Integer.parseInt(driverView.getSlotNum1());
+                try {
+                    int slotInput = Integer.parseInt(driverView.getSlotNum1());
                 
                 if (slotInput-1 >= 0 && slotInput-1 < driverModel.getLatestMachine().getSlots().length){
                     Item itemToBag = driverModel.getLatestMachine().getSlots()[slotInput-1].getItem();
@@ -460,7 +485,12 @@ public class DriverController {
                         driverView.addToTextDisplay3("Can't add to bag");
                 } else
                     driverView.addToTextDisplay3("Enter valid slot");
-                driverView.setNumText("");
+                    driverView.setNumText("");
+                } catch (Exception a) {
+                    driverView.addToTextDisplay3("Input a slot number\n");
+
+                }
+                
             }
         });
 
@@ -472,69 +502,80 @@ public class DriverController {
                         veggieFound = false, customItemMade = false;   
                 Money tempPayment = driverModel.getPayment(); 
 
-                if (driverModel.getVmSpecial().getOrderBag().size() != 0){
-                    while (i < driverModel.getVmSpecial().getOrderBag().size() && 
-                        (riceFound == false || meatFound == false || veggieFound == false)){
-                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Rice){
-                            riceFound = true; 
-                        }  
-                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Meat){
-                            meatFound = true; 
-                        }
-                        if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Veggie){
-                            veggieFound = true;                   
-                        }
-                            
-                        i++;
-                    }
-                    if (riceFound == true && meatFound == true && veggieFound == true){
-                        driverView.addToTextDisplay3("Buying custom item");
-                        //check if kaya ng stock
-                        int j = 0; 
-                        boolean enoughStock = true; 
-                        int combinedPrice = 0; 
-
-                        System.out.println("Price: " + combinedPrice);
-                        System.out.println(enoughStock);
-                        if (enoughStock){
-                            if (driverModel.getPayment().getTotalMoney() >= combinedPrice){
-                                driverModel.addToMoney(tempPayment);
-                                int change = (driverModel.getPayment().getTotalMoney() - combinedPrice);
-                                if (driverModel.getLatestMachine().produceChange(change, combinedPrice)){
-                                    driverView.addToTextDisplay3("Change is: " + change);
-                                    driverModel.clearPayment();
-                                    //add item to itemsSold to certain transaction
-                                    int size = driverModel.getVmSpecial().getOrderBag().size(); 
-                                    for (int k = 0; k < size; k++){
-                                        int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
-                                        Item itemToSell = driverModel.getVmSpecial().getOrderBag().get(k);
-                                        System.out.println(k);
-                                        driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToSell);
-                                        driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
-                                    }
-                                    System.out.println("hi");
-                                    driverView.addToTextDisplay3("Preparing custom item...\n");
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice()); 
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat()); 
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies()); 
-                                    driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());
-                                    driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
-                                    driverModel.getVmSpecial().getOrderBag().clear();
-                                    driverView.clearDisplay();
-                                    customItemMade = true; 
-                                }else
-                                    driverView.addToTextDisplay3("Not enough change");
+                if (tempPayment.getTotalMoney() > 0){
+                    if (driverModel.getVmSpecial().getOrderBag().size() != 0){
+                        while (i < driverModel.getVmSpecial().getOrderBag().size() && 
+                            (riceFound == false || meatFound == false || veggieFound == false)){
+                            if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Rice){
+                                riceFound = true; 
+                            }  
+                            if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Meat){
+                                meatFound = true; 
                             }
-                        } else
-                            driverView.addToTextDisplay3("Not enough stock");
-                    } else
-                        driverView.addToTextDisplay3("Insufficient ingredients");
-                } else 
-                    driverView.addToTextDisplay3("Order bag is empty");
+                            if (driverModel.getVmSpecial().getOrderBag().get(i) instanceof Veggie){
+                                veggieFound = true;                   
+                            }
+                                
+                            i++;
+                        }
+                        if (riceFound == true && meatFound == true && veggieFound == true){
+                            //check if kaya ng stock
+                            int j = 0; 
+                            boolean enoughStock = true; 
+                            int combinedPrice = 0; 
 
+                            if (enoughStock){
+                                if (driverModel.getPayment().getTotalMoney() >= combinedPrice){
+                                    driverModel.addToMoney(tempPayment);
+                                    int bagSize = driverModel.getVmSpecial().getOrderBag().size();
+                                    for (j = 0; j < bagSize; j++){
+                                        combinedPrice += driverModel.getVmSpecial().getOrderBag().get(j).getPrice();
+                                    }
+                                    int change = (driverModel.getPayment().getTotalMoney() - combinedPrice);
+                                    if (driverModel.getLatestMachine().produceChange(change, combinedPrice)){
+                                        driverView.addToTextDisplay3("Buying custom item");
+                                        driverView.addToTextDisplay3("Change is: " + change);
+                                        driverModel.clearPayment();
+                                        //add item to itemsSold to certain transaction
+                                        int size = driverModel.getVmSpecial().getOrderBag().size(); 
+                                        for (int k = 0; k < size; k++){
+                                            int numTransactions = driverModel.getLatestMachine().getTransactions().size(); 
+                                            Item itemToSell = driverModel.getVmSpecial().getOrderBag().get(k);
+                                            driverModel.getLatestMachine().getTransactions().get(numTransactions-1).getItemsSold().add(itemToSell);
+                                            driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                        }
+                                        driverView.addToTextDisplay3("Preparing custom item...\n");
+                                        driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareRice()); 
+                                        driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareMeat()); 
+                                        driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareVeggies()); 
+                                        driverView.addToTextDisplay3(driverModel.getVmSpecial().prepareExtras());
+                                        driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
+                                        driverView.addToTextDisplay3("Dispensed Monggo Rice!");
+                                        driverModel.getVmSpecial().getOrderBag().clear();
+                                        driverView.setDisplay1("Amount Inserted: ");
+                                        driverView.setDisplay2("Amount Needed: ");
 
-                driverModel.getVmSpecial().getOrderBag().clear();
-                driverModel.bagToSlot(); 
+                                        customItemMade = true; 
+                                    }else{
+                                        driverView.addToTextDisplay3("Not enough change");
+                                    }
+                                }
+                            } else{
+                                driverView.addToTextDisplay3("Not enough stock\nOrder bag was emptied!");
+                            }
+                        } else{
+                            driverView.addToTextDisplay3("Insufficient ingredients\nOrder bag was emptied!");
+                        }
+                        } else {
+                            driverView.addToTextDisplay3("Order bag is empty");
+                        }
+                } else{
+                    driverView.addToTextDisplay3("Payment is empty\nOrder bag was emptied!");
+                }
+                driverView.setDisplay1("Amount Inserted: ");
+                driverView.setDisplay1("Amount Needed: ");
+                driverModel.bagToSlot();
+                driverModel.getVmSpecial().getOrderBag().clear(); 
                 driverView.setInventoryTest(driverModel.getLatestMachine().returnInventory());
 
             }

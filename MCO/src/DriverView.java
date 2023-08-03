@@ -648,7 +648,6 @@ public class DriverView {
         JScrollPane scroll = new JScrollPane(history);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-
         this.history.setEditable(false);
 
         JPanel panel = new JPanel();
@@ -792,6 +791,12 @@ public class DriverView {
         }
         public void setClearBtn(ActionListener actionListener){
             this.clearButton.addActionListener(actionListener);
+        }
+        public void setDisplay1(String text){
+            this.display1.setText(text);
+        }
+        public void setDisplay2(String text){
+            this.display2.setText(text);
         }
         public void clearDisplay(){
             this.display1.setText("Amount Inserted: ");
